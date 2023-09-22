@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Movies2023"
 include(":app")
- 
+include(":data")
