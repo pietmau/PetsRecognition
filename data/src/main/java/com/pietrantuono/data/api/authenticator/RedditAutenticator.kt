@@ -1,6 +1,6 @@
 package com.pietrantuono.data.api.authenticator
 
-import com.pietrantuono.data.api.api.RetrofitAccessTokenApiClient
+import com.pietrantuono.data.api.api.accesstoken.RetrofitAccessTokenApiClient
 import com.pietrantuono.data.api.tokenmanager.TokenManager
 import javax.inject.Inject
 import okhttp3.Authenticator

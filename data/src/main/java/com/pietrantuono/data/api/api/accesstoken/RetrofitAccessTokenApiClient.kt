@@ -1,9 +1,8 @@
-package com.pietrantuono.data.api.api
+package com.pietrantuono.data.api.api.accesstoken
 
 import com.pietrantuono.data.api.AccessTokenApiClient
 import com.pietrantuono.data.api.interceptor.BasicAuthInterceptor
 import com.pietrantuono.data.model.AccessToken
-import com.pietrantuono.mylibrary.BuildConfig
 import javax.inject.Inject
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitAccessTokenApiClient @Inject constructor() : AccessTokenApiClient {
 
-    private var mRedditAccessTokenApi = Retrofit.Builder()// TODO reuse!!!
+    private var mAccessTokenApi = Retrofit.Builder()// TODO reuse!!!
         .baseUrl(BASE_URL)
         .client(
             Builder()
@@ -22,11 +21,10 @@ class RetrofitAccessTokenApiClient @Inject constructor() : AccessTokenApiClient 
                 .build()
         )
         .addConverterFactory(GsonConverterFactory.create())
-        .build().create(RedditAccessTokenApi::class.java)
+        .build().create(AccessTokenApi::class.java)
 
     override suspend fun getAccessToken(deviceId: String): AccessToken {
-        val s = "${BuildConfig.CLIENT_ID}:"
-        return mRedditAccessTokenApi.getAccessToken(
+        return mAccessTokenApi.getAccessToken(
             grantType = GRANT_TYPE,
             redirectUri = REDIRECT_URI,
             deviceId = deviceId

@@ -1,11 +1,11 @@
-package com.pietrantuono.data.api.api
+package com.pietrantuono.data.api.api.accesstoken
 
 import com.pietrantuono.data.model.AccessToken
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface RedditAccessTokenApi {
+interface AccessTokenApi {
 
     @FormUrlEncoded
     @POST("api/v1/access_token")

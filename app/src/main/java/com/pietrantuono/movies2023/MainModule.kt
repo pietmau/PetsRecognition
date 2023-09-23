@@ -6,7 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionSche
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
 import androidx.security.crypto.MasterKeys
 import com.pietrantuono.data.api.AccessTokenApiClient
-import com.pietrantuono.data.api.api.RetrofitAccessTokenApiClient
+import com.pietrantuono.data.api.api.accesstoken.RetrofitAccessTokenApiClient
 import com.pietrantuono.data.api.authenticator.RedditAuthenticator
 import com.pietrantuono.data.api.tokenmanager.SharedPreferencesTokenManager
 import com.pietrantuono.data.api.tokenmanager.TokenManager
