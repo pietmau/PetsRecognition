@@ -7,7 +7,6 @@ import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionSc
 import androidx.security.crypto.MasterKeys
 import com.pietrantuono.data.api.api.accesstoken.AccessTokenApiClient
 import com.pietrantuono.data.api.api.accesstoken.RetrofitAccessTokenApiClient
-import com.pietrantuono.data.api.authenticator.RedditAuthenticator
 import com.pietrantuono.data.api.interceptor.BearerTokenAuthInterceptor
 import com.pietrantuono.data.api.tokenmanager.SharedPreferencesTokenManager
 import com.pietrantuono.data.api.tokenmanager.TokenManager
@@ -30,13 +29,14 @@ interface MainModule {
     @Binds
     fun bindRedditApiClient(apiClient: RetrofitAccessTokenApiClient): AccessTokenApiClient
 
-    @Binds
-    fun bindAuthenticator(authenticator: RedditAuthenticator): Authenticator
-
     companion object {
 
         @Provides
-        fun provideBearerTokenAuthInterceptor(tokenManager: TokenManager): Interceptor = BearerTokenAuthInterceptor(tokenManager = tokenManager)
+        fun provideBearerTokenAuthInterceptor(tokenManager: TokenManager, accessTokenApiClient: RetrofitAccessTokenApiClient) =
+            BearerTokenAuthInterceptor(
+                tokenManager = tokenManager,
+                accessTokenApiClient = accessTokenApiClient
+            )
 
         @Provides
         fun provideSharedPreferences(@ApplicationContext context: Context) =

@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch(Dispatchers.IO) {
-            val token = apiClient.getSubReddit("movies", 10, null, null, null)
+            val token = apiClient.getSubReddit("r/memes/top", 10, null, null, null)
             foo(token)
         }
         setContent {

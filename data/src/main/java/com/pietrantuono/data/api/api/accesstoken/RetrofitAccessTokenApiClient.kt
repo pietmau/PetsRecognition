@@ -26,7 +26,7 @@ class RetrofitAccessTokenApiClient @Inject constructor() : AccessTokenApiClient 
             grantType = GRANT_TYPE,
             redirectUri = REDIRECT_URI,
             deviceId = deviceId
-        )
+        ).execute().body()
 
     private companion object {
         private const val BASE_URL = "https://www.reddit.com" // TODO move to gradle

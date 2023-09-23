@@ -1,8 +1,8 @@
 package com.pietrantuono.data.api.api.reddit
 
-import com.pietrantuono.data.api.authenticator.RedditAuthenticator
+import com.pietrantuono.data.api.interceptor.BearerTokenAuthInterceptor
+import com.pietrantuono.data.model.reddit.RedditResponse
 import javax.inject.Inject
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
@@ -10,8 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitRedditApiClient @Inject constructor(
-    authenticator: RedditAuthenticator,
-    bearerTokenAuthInterceptor: Interceptor
+    bearerTokenAuthInterceptor: BearerTokenAuthInterceptor
 ) : RedditApiClient {
 
     private var redditApi = Retrofit.Builder()// TODO reuse!!!
@@ -19,13 +18,11 @@ class RetrofitRedditApiClient @Inject constructor(
         .client(
             Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
-                .authenticator(authenticator)
                 .addInterceptor(bearerTokenAuthInterceptor)
                 .build()
         )
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(RedditApi::class.java)
-
 
     override suspend fun getSubReddit(
         subReddit: String,
@@ -33,7 +30,15 @@ class RetrofitRedditApiClient @Inject constructor(
         before: String?,
         after: String?,
         query: String?
-    ) = redditApi.getSubReddit()
+    ): RedditResponse {
+        val queryMap = mutableMapOf<String, String>().apply {
+            limit?.let { this["limit"] = it.toString() }
+            before?.let { this["before"] = it }
+            after?.let { this["after"] = it }
+            query?.let { this["?"] = it }
+        }
+        return redditApi.getSubReddit(subReddit, queryMap)
+    }
 
     private companion object {
         private const val BASE_URL = "https://oauth.reddit.com" // TODO move to gradle
