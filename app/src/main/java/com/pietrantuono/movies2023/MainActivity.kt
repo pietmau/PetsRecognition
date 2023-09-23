@@ -10,8 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.pietrantuono.data.api.RedditApiClient
-import com.pietrantuono.data.api.RetrofitRedditApiClient
+import com.pietrantuono.data.api.RedditAccessTokenApiClient
 import com.pietrantuono.data.model.AccessToken
 import com.pietrantuono.movies2023.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var apiClient: RedditApiClient
+    lateinit var apiClient: RedditAccessTokenApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
