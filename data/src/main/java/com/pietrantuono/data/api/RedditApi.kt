@@ -13,8 +13,7 @@ interface RedditApi {
     suspend fun getAccessToken(
         @Field("grant_type") grantType: String,
         @Field("redirect_uri") redirectUri: String,
-        @Field("device_id") deviceId: String,
-        @Header("Authorization") credentials: String // TODO remove!!!
+        @Field("device_id") deviceId: String
     ): AccessToken
 
 }
