@@ -8,6 +8,7 @@ import androidx.security.crypto.MasterKeys
 import com.pietrantuono.data.api.api.accesstoken.AccessTokenApiClient
 import com.pietrantuono.data.api.api.accesstoken.RetrofitAccessTokenApiClient
 import com.pietrantuono.data.api.authenticator.RedditAuthenticator
+import com.pietrantuono.data.api.interceptor.BearerTokenAuthInterceptor
 import com.pietrantuono.data.api.tokenmanager.SharedPreferencesTokenManager
 import com.pietrantuono.data.api.tokenmanager.TokenManager
 import dagger.Binds
@@ -17,6 +18,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Authenticator
+import okhttp3.Interceptor
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -32,6 +34,9 @@ interface MainModule {
     fun bindAuthenticator(authenticator: RedditAuthenticator): Authenticator
 
     companion object {
+
+        @Provides
+        fun provideBearerTokenAuthInterceptor(tokenManager: TokenManager): Interceptor = BearerTokenAuthInterceptor(tokenManager = tokenManager)
 
         @Provides
         fun provideSharedPreferences(@ApplicationContext context: Context) =

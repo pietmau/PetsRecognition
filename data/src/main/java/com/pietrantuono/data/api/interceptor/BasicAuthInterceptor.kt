@@ -12,7 +12,7 @@ class BasicAuthInterceptor constructor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        var request = chain.request()
+        val request = chain.request()
         if (request.url.host != host) {
             return chain.proceed(request)
         }

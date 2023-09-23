@@ -9,7 +9,7 @@ interface AccessTokenApi {
 
     @FormUrlEncoded
     @POST("api/v1/access_token")
-    suspend fun getAccessToken(
+    fun getAccessToken(
         @Field("grant_type") grantType: String,
         @Field("redirect_uri") redirectUri: String,
         @Field("device_id") deviceId: String

@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.pietrantuono.data.api.api.accesstoken.AccessTokenApiClient
-import com.pietrantuono.data.model.accesstoken.AccessToken
+import com.pietrantuono.data.api.api.reddit.RetrofitRedditApiClient
+import com.pietrantuono.data.model.reddit.RedditResponse
 import com.pietrantuono.movies2023.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,12 +22,12 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var apiClient: AccessTokenApiClient
+    lateinit var apiClient: RetrofitRedditApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch(Dispatchers.IO) {
-            val token = apiClient.getAccessToken("jhjdodkskrmvifkwlxqdvvkfkr")
+            val token = apiClient.getSubReddit("movies", 10, null, null, null)
             foo(token)
         }
         setContent {
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun foo(token: AccessToken) {
+    private fun foo(token: RedditResponse) {
 
     }
 }

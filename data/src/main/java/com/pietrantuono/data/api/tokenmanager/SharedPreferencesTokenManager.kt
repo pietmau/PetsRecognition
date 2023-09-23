@@ -1,6 +1,7 @@
 package com.pietrantuono.data.api.tokenmanager
 
 import android.content.SharedPreferences
+import java.util.UUID
 import javax.inject.Inject
 
 class SharedPreferencesTokenManager @Inject constructor(private val sharedPreferences: SharedPreferences) : TokenManager {
@@ -10,7 +11,15 @@ class SharedPreferencesTokenManager @Inject constructor(private val sharedPrefer
         sharedPreferences.edit().putString(TOKEN, token).apply()
     }
 
+    override fun getDeviceId() =
+        sharedPreferences.getString(TOKEN, null) ?: run {
+            val deviceId = UUID.randomUUID().toString()
+            sharedPreferences.edit().putString(DEVICE_ID, deviceId).apply()
+            deviceId
+        }
+
     private companion object {
         private const val TOKEN = "token"
+        private const val DEVICE_ID = "device_id"
     }
 }

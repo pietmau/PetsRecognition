@@ -1,20 +1,26 @@
 package com.pietrantuono.data.api.api.reddit
 
-import com.pietrantuono.data.api.interceptor.BasicAuthInterceptor
+import com.pietrantuono.data.api.authenticator.RedditAuthenticator
 import javax.inject.Inject
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitAccessTokenApiClient @Inject constructor() : RedditApiClient {
+class RetrofitRedditApiClient @Inject constructor(
+    authenticator: RedditAuthenticator,
+    bearerTokenAuthInterceptor: Interceptor
+) : RedditApiClient {
 
     private var redditApi = Retrofit.Builder()// TODO reuse!!!
         .baseUrl(BASE_URL)
         .client(
             Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
+                .authenticator(authenticator)
+                .addInterceptor(bearerTokenAuthInterceptor)
                 .build()
         )
         .addConverterFactory(GsonConverterFactory.create())
@@ -27,9 +33,9 @@ class RetrofitAccessTokenApiClient @Inject constructor() : RedditApiClient {
         before: String?,
         after: String?,
         query: String?
-    ) = redditApi.getsubReddit()
+    ) = redditApi.getSubReddit()
 
     private companion object {
-        private const val BASE_URL = "https://www.reddit.com" // TODO move to gradle
+        private const val BASE_URL = "https://oauth.reddit.com" // TODO move to gradle
     }
 }

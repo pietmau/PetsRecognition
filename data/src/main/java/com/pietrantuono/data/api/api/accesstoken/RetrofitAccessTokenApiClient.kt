@@ -21,7 +21,7 @@ class RetrofitAccessTokenApiClient @Inject constructor() : AccessTokenApiClient 
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(AccessTokenApi::class.java)
 
-    override suspend fun getAccessToken(deviceId: String) =
+    override fun getAccessToken(deviceId: String) =
         accessTokenApi.getAccessToken(
             grantType = GRANT_TYPE,
             redirectUri = REDIRECT_URI,
