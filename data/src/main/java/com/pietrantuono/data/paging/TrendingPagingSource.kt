@@ -6,24 +6,26 @@ import com.pietrantuono.data.api.ApiClient
 import com.pietrantuono.data.model.Movie
 import javax.inject.Inject
 
-class TrendingPagingSource @Inject constructor(val apiClient: ApiClient) : PagingSource<Int, Movie>() {
+class TrendingPagingSource @Inject constructor(val apiClient: ApiClient) : PagingSource<Int, Movie>() { // TODO abstract it
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> =
         try {
             val pageNumber = params.key ?: 1
             val trendingMovies = apiClient.getTrendingMovies(pageNumber)
             val movies = trendingMovies.movies
-            val nextPage: Int? = trendingMovies.page?.let { it + 1 }
-            val prevKey = trendingMovies.page?.let { it - 1 }
+            val page = trendingMovies.page
+            val nextPage = page?.let { it + 1 }
             LoadResult.Page(
                 data = movies,
-                prevKey = prevKey,
+                prevKey = page,
                 nextKey = nextPage
             )
         } catch (exception: Exception) {
-            LoadResult.Error(exception)
+            LoadResult.Error(exception) // TODO log
         }
 
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
-        TODO("Not yet implemented")
-    }
+    override fun getRefreshKey(state: PagingState<Int, Movie>) =
+        state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
 }
