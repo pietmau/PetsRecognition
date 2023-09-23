@@ -1,4 +1,4 @@
-package com.pietrantuono.data.api
+package com.pietrantuono.data.api.api.reddit
 
 import javax.inject.Inject
 import retrofit2.Retrofit

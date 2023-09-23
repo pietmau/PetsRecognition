@@ -1,4 +1,4 @@
-package com.pietrantuono.data.model
+package com.pietrantuono.data.model.accesstoken
 
 import com.google.gson.annotations.SerializedName
 

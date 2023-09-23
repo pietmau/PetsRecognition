@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.pietrantuono.data.api.AccessTokenApiClient
-import com.pietrantuono.data.model.AccessToken
+import com.pietrantuono.data.api.api.accesstoken.AccessTokenApiClient
+import com.pietrantuono.data.model.accesstoken.AccessToken
 import com.pietrantuono.movies2023.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
