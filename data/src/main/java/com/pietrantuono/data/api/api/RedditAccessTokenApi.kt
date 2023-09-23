@@ -1,4 +1,4 @@
-package com.pietrantuono.data.api
+package com.pietrantuono.data.api.api
 
 import com.pietrantuono.data.model.AccessToken
 import retrofit2.http.Field

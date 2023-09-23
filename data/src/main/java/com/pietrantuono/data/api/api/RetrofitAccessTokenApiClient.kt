@@ -1,5 +1,6 @@
-package com.pietrantuono.data.api
+package com.pietrantuono.data.api.api
 
+import com.pietrantuono.data.api.AccessTokenApiClient
 import com.pietrantuono.data.api.interceptor.BasicAuthInterceptor
 import com.pietrantuono.data.model.AccessToken
 import com.pietrantuono.mylibrary.BuildConfig
@@ -10,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitRedditAccessTokenApiClient @Inject constructor() : RedditAccessTokenApiClient {
+class RetrofitAccessTokenApiClient @Inject constructor() : AccessTokenApiClient {
 
     private var mRedditAccessTokenApi = Retrofit.Builder()// TODO reuse!!!
         .baseUrl(BASE_URL)
