@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.pietrantuono.data.api.api.reddit.RetrofitRedditApiClient
-import com.pietrantuono.data.model.reddit.RedditResponse
+import com.pietrantuono.data.network.api.api.reddit.RetrofitRedditApiClient
+import com.pietrantuono.data.network.model.reddit.NetowrkRedditResponse
 import com.pietrantuono.movies2023.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun foo(token: RedditResponse) {
+    private fun foo(token: NetowrkRedditResponse) {
 
     }
 }
