@@ -1,4 +1,4 @@
-package com.pietrantuono.movies2023.ui.theme
+package com.pietrantuono.movies2023.features.posts.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
