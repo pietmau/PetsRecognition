@@ -28,7 +28,7 @@ class RetrofitRoomGetPostsRepository @Inject constructor(
     }
 
     private companion object {
-        private const val MEMES = "r/memes/top/?t=all&count=555"
+        private const val MEMES = "r/memes/top/"
     }
 
     private fun NetworkData.toPost(kind: String?): Post = Post(

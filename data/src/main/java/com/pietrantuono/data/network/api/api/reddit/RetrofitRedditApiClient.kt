@@ -17,8 +17,8 @@ class RetrofitRedditApiClient @Inject constructor(
         .baseUrl(BASE_URL)
         .client(
             Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
                 .addInterceptor(bearerTokenAuthInterceptor)
+                .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
                 .build()
         )
         .addConverterFactory(GsonConverterFactory.create())
@@ -37,7 +37,7 @@ class RetrofitRedditApiClient @Inject constructor(
             after?.let { this["after"] = it }
             query?.let { this["?"] = it }
         }
-        return redditApi.getSubReddit(subReddit, queryMap)
+        return redditApi.getSubReddit(queryMap)
     }
 
     private companion object {

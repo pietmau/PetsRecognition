@@ -17,9 +17,10 @@ class BearerTokenAuthInterceptor constructor(
         if (request.url.host != host) {
             return chain.proceed(request)
         }
-        val token = getTokenFromStore() ?: return getNewTokenAndDoRequest(request, chain)
+        val tokenFromStore = getTokenFromStore()
+        val token = tokenFromStore ?: return getNewTokenAndDoRequest(request, chain)
         val response = doRequest(request, token, chain)
-        return if (response.code == FORBIDDEN) {
+        return if (response.code == 401) {
             getNewTokenAndDoRequest(request, chain)
         } else {
             response
@@ -27,7 +28,8 @@ class BearerTokenAuthInterceptor constructor(
     }
 
     private fun getNewTokenAndDoRequest(request: Request, chain: Interceptor.Chain): Response {
-        val token = getNewToken() ?: return chain.proceed(request)
+        val newToken = getNewToken()
+        val token = newToken ?: return chain.proceed(request)
         return doRequest(request, token, chain)
     }
 
@@ -40,8 +42,10 @@ class BearerTokenAuthInterceptor constructor(
 
     private fun getNewToken() =
         try {
-            val token = accessTokenApiClient.getAccessToken(tokenManager.getDeviceId())
-            token?.accessToken?.also { tokenManager.setToken(it) }
+            val deviceId = tokenManager.getDeviceId()
+            val token = accessTokenApiClient.getAccessToken(deviceId)
+            val also = token?.accessToken?.also { tokenManager.setToken(it) }
+            also
         } catch (e: Exception) {
             null // TODO handle error
         }

@@ -12,7 +12,7 @@ class SharedPreferencesTokenManager @Inject constructor(private val sharedPrefer
     }
 
     override fun getDeviceId() =
-        sharedPreferences.getString(TOKEN, null) ?: run {
+        sharedPreferences.getString(DEVICE_ID, null) ?: run {
             val deviceId = UUID.randomUUID().toString()
             sharedPreferences.edit().putString(DEVICE_ID, deviceId).apply()
             deviceId

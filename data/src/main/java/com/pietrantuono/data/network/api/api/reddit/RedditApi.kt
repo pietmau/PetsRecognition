@@ -8,9 +8,9 @@ import retrofit2.http.QueryMap
 interface RedditApi {
 
     //@GET("/r/memes/top/?t=all") // TODO add page and limit
-    @GET("/{subReddit}/?t=all") // TODO add page and limit
+    @GET("/r/memes/top/?t=all&count=555") // TODO add page and limit
     suspend fun getSubReddit(
-        @Path("subReddit") subReddit: String,
+        //@Path("subReddit") subReddit: String,
         @QueryMap queryMap: Map<String, String>
     ): NetowrkRedditResponse
 

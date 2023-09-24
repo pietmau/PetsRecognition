@@ -13,7 +13,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class PostsViewModel @Inject constructor(private val useCase: GetPostsUseCase) : ViewModel(), Consumer<Action> { // TODO use generics
+class PostsViewModel @Inject constructor(
+    private val useCase: GetPostsUseCase
+) : ViewModel(), Consumer<Action> { // TODO use generics
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Content())
 

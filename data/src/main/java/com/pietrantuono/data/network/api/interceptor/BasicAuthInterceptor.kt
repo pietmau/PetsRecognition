@@ -18,6 +18,7 @@ class BasicAuthInterceptor constructor(
         }
         val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
         val newRequest = request.newBuilder().header("Authorization", "Basic $encodedCredentials").build()
-        return chain.proceed(newRequest)
+        val proceed: Response = chain.proceed(newRequest)
+        return proceed
     }
 }
