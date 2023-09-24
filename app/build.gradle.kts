@@ -64,6 +64,9 @@ dependencies {
     implementation("androidx.security:security-identity-credential:1.0.0-alpha03")
     implementation("androidx.security:security-app-authenticator:1.0.0-alpha02")
 
+    // Compose.
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.2")
