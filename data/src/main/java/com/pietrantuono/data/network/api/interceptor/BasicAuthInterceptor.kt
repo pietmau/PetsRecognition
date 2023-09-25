@@ -2,7 +2,6 @@ package com.pietrantuono.data.network.api.interceptor
 
 import android.util.Base64
 import com.pietrantuono.mylibrary.BuildConfig
-import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -18,7 +17,6 @@ class BasicAuthInterceptor constructor(
         }
         val encodedCredentials = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
         val newRequest = request.newBuilder().header("Authorization", "Basic $encodedCredentials").build()
-        val proceed: Response = chain.proceed(newRequest)
-        return proceed
+        return chain.proceed(newRequest)
     }
 }

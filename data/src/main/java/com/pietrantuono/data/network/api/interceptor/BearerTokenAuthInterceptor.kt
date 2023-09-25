@@ -17,19 +17,13 @@ class BearerTokenAuthInterceptor constructor(
         if (request.url.host != host) {
             return chain.proceed(request)
         }
-        val tokenFromStore = getTokenFromStore()
-        val token = tokenFromStore ?: return getNewTokenAndDoRequest(request, chain)
+        val token = getTokenFromStore() ?: return getNewTokenAndDoRequest(request, chain)
         val response = doRequest(request, token, chain)
-        return if (response.code == 401) {
-            getNewTokenAndDoRequest(request, chain)
-        } else {
-            response
-        }
+        return response.takeIf { response.code != UNAUTHORIZED } ?: getNewTokenAndDoRequest(request, chain)
     }
 
     private fun getNewTokenAndDoRequest(request: Request, chain: Interceptor.Chain): Response {
-        val newToken = getNewToken()
-        val token = newToken ?: return chain.proceed(request)
+        val token = getNewToken() ?: return chain.proceed(request)
         return doRequest(request, token, chain)
     }
 
@@ -44,8 +38,7 @@ class BearerTokenAuthInterceptor constructor(
         try {
             val deviceId = tokenManager.getDeviceId()
             val token = accessTokenApiClient.getAccessToken(deviceId)
-            val also = token?.accessToken?.also { tokenManager.setToken(it) }
-            also
+            token?.accessToken?.also { tokenManager.setToken(it) }
         } catch (e: Exception) {
             null // TODO handle error
         }
@@ -53,6 +46,6 @@ class BearerTokenAuthInterceptor constructor(
     private companion object {
         private const val AUTHORIZATION = "Authorization"
         private const val BEARER = "Bearer"
-        private const val FORBIDDEN = 403
+        private const val UNAUTHORIZED = 401
     }
 }

@@ -14,7 +14,6 @@ class RetrofitRoomGetPostsRepository @Inject constructor(
     override suspend fun getPosts(before: String?, after: String?, limit: Int?): Posts {
         try {
             val response = client.getSubReddit(MEMES, limit, before, after, null)
-
             return Posts(
                 posts = response.data?.posts?.map {
                     it.data!!.toPost(it.kind) // TODO FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -23,12 +22,12 @@ class RetrofitRoomGetPostsRepository @Inject constructor(
                 after = response.data?.after
             )
         } catch (e: Exception) {
-            throw e // TODO FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            throw e // TODO FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!! add erro resposne here!!!
         }
     }
 
     private companion object {
-        private const val MEMES = "r/memes/top/"
+        private const val MEMES = "memes"
     }
 
     private fun NetworkData.toPost(kind: String?): Post = Post(
