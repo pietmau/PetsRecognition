@@ -37,7 +37,7 @@ class PostsViewModel @Inject constructor(
     }
 
     val items: Flow<PagingData<Pair<String, String>>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = { PostsPagingSource(useCase) }
     )
         .flow

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.pietrantuono.domain.GetPostsUseCase
+import com.pietrantuono.domain.model.reddit.Posts
 import javax.inject.Inject
 
 /**
@@ -11,8 +12,7 @@ import javax.inject.Inject
  * data, and the [Article] specifies that the [PagingSource] fetches an [Article] [List].
  */
 
-private val STARTING_KEY: String? = null
-private const val LOAD_DELAY_MILLIS = 3_000L
+private val STARTING_KEY: String? = "t3_d9gvok"
 
 class PostsPagingSource @Inject constructor(
     private val useCase: GetPostsUseCase
@@ -24,12 +24,18 @@ class PostsPagingSource @Inject constructor(
 
         // We fetch as many articles as hinted to by params.loadSize
         //val range = startKey.until(startKey + params.loadSize)
+        Log.e("foo", params.toString())
         Log.e("foo", "startKey " + startKey + " params.loadSize " + params.loadSize)
-        val result = useCase.execute(GetPostsUseCase.Params(after = startKey, limit = params.loadSize))
+        var result: Posts? = null
+        if (params is LoadParams.Prepend) {
+            result = useCase.execute(GetPostsUseCase.Params(before = startKey, limit = params.loadSize))
+        } else {
+            result = useCase.execute(GetPostsUseCase.Params(after = startKey, limit = params.loadSize))
+        }
         // Simulate a delay for loads adter the initial load
         //if (startKey != STARTING_KEY) delay(LOAD_DELAY_MILLIS)
         val data: List<Pair<String, String>> = result.posts.map { it.data }.map {
-            if(it?.name== null) Log.e("foo", "it.name is null for itme ${it?.title} ${it?.name}")
+            if (it?.name == null) Log.e("foo", "it.name is null for itme ${it?.title} ${it?.name}")
             (it?.title ?: "") to (it?.name ?: "")
 
         }.filterNotNull()
