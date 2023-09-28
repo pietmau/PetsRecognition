@@ -2,6 +2,9 @@ package com.pietrantuono.movies2023.features.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.pietrantuono.domain.GetPostsUseCase
 import com.pietrantuono.domain.model.reddit.Posts
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,5 +37,10 @@ class PostsViewModel @Inject constructor(
         }
     }
 
-
+    val items: Flow<PagingData<String>> = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        pagingSourceFactory = { repository.articlePagingSource() }
+    )
+        .flow
+        .cachedIn(viewModelScope)
 }
