@@ -1,5 +1,6 @@
 package com.pietrantuono.movies2023.features.posts.pagination
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.pietrantuono.domain.GetPostsUseCase
@@ -15,33 +16,35 @@ private const val LOAD_DELAY_MILLIS = 3_000L
 
 class PostsPagingSource @Inject constructor(
     private val useCase: GetPostsUseCase
-) : PagingSource<String, String>() {
+) : PagingSource<String, Pair<String, String>>() {
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, String> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Pair<String, String>> {
         // If params.key is null, it is the first load, so we start loading with STARTING_KEY
         val startKey = params.key ?: STARTING_KEY
 
         // We fetch as many articles as hinted to by params.loadSize
         //val range = startKey.until(startKey + params.loadSize)
-
+        Log.e("foo", "startKey " + startKey + " params.loadSize " + params.loadSize)
         val result = useCase.execute(GetPostsUseCase.Params(after = startKey, limit = params.loadSize))
         // Simulate a delay for loads adter the initial load
         //if (startKey != STARTING_KEY) delay(LOAD_DELAY_MILLIS)
+        val data: List<Pair<String, String>> = result.posts.map { it.data }.map {
+            if(it?.name== null) Log.e("foo", "it.name is null for itme ${it?.title} ${it?.name}")
+            (it?.title ?: "") to (it?.name ?: "")
+
+        }.filterNotNull()
+
         return LoadResult.Page(
-            data = result.posts.map { it.data }.map { it?.title }.filterNotNull(),
+            data = data,
             prevKey = result.before,
             nextKey = result.after
         )
     }
 
     // The refresh key is used for the initial load of the next PagingSource, after invalidation
-    override fun getRefreshKey(state: PagingState<String, String>): String? {
-        // In our case we grab the item closest to the anchor position
-        // then return its id - (state.config.pageSize / 2) as a buffer
-//        val anchorPosition = state.anchorPosition ?: return null
-//        val article = state.closestItemToPosition(anchorPosition) ?: return null
-//        return ensureValidKey(key = article.id - (state.config.pageSize / 2))
-        return null
+    override fun getRefreshKey(state: PagingState<String, Pair<String, String>>): String {
+        Log.e("foo", "getRefreshKey")
+        return state.anchorPosition?.let { state.closestItemToPosition(it)?.second }!!
     }
 
     /**

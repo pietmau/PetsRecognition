@@ -1,6 +1,7 @@
 package com.pietrantuono.domain.model.reddit
 
 data class Data(
+    val name: String? = null,
     val subreddit: String? = null,
     val thumbnail: String? = null,
     val title: String? = null,

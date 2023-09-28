@@ -38,7 +38,7 @@ class RetrofitRedditApiClient @Inject constructor(
     ) = mutableMapOf<String, String>().apply {
         this["t"] = "all"
         // Explanation https://www.reddit.com/r/redditdev/comments/d8zl00/comment/f1g505p/?utm_source=share&utm_medium=web2x&context=3
-        this["count"] = "555"
+        this["count"] = "20"
         limit?.let { this["limit"] = it.toString() }
         before?.let { this["before"] = it }
         after?.let { this["after"] = it }

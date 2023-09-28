@@ -33,7 +33,8 @@ class RetrofitRoomGetPostsRepository @Inject constructor(
     private fun NetworkData.toPost(kind: String?): Post = Post(
         kind = kind,
         data = Data(
-            title = title
+            title = title,
+            name = name,
         )
     )
 }

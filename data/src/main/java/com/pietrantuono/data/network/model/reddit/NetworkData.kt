@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.pietrantuono.domain.model.reddit.Data
 
 data class NetworkData(
+    @SerializedName("name") val name: String? = null,
     @SerializedName("subreddit") val subreddit: String? = null,
     @SerializedName("thumbnail") val thumbnail: String? = null,
     @SerializedName("title") val title: String? = null,
