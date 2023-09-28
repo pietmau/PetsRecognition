@@ -5,7 +5,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
 import androidx.security.crypto.MasterKeys
-import com.pietrantuono.data.RetrofitRoomGetPostsRepository
+import com.pietrantuono.data.network.RetrofitRepository
 import com.pietrantuono.data.network.api.api.accesstoken.AccessTokenApiClient
 import com.pietrantuono.data.network.api.api.accesstoken.RetrofitAccessTokenApiClient
 import com.pietrantuono.data.network.api.api.reddit.RedditApiClient
@@ -13,7 +13,7 @@ import com.pietrantuono.data.network.api.api.reddit.RetrofitRedditApiClient
 import com.pietrantuono.data.network.api.interceptor.BearerTokenAuthInterceptor
 import com.pietrantuono.data.network.api.tokenmanager.SharedPreferencesTokenManager
 import com.pietrantuono.data.network.api.tokenmanager.TokenManager
-import com.pietrantuono.domain.GetPostsRepository
+import com.pietrantuono.domain.RedditRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,7 +35,7 @@ interface MainModule {
     fun bindRedditApiClient(apiClient: RetrofitRedditApiClient): RedditApiClient
 
     @Binds
-    fun bindRepository(repository: RetrofitRoomGetPostsRepository): GetPostsRepository
+    fun bindRepository(repository: RetrofitRepository): RedditRepository
 
     companion object {
 
