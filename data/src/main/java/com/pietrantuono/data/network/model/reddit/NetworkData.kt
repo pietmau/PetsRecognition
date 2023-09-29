@@ -1,7 +1,6 @@
 package com.pietrantuono.data.network.model.reddit
 
 import com.google.gson.annotations.SerializedName
-import com.pietrantuono.domain.model.reddit.Data
 
 data class NetworkData(
     @SerializedName("name") val name: String? = null,

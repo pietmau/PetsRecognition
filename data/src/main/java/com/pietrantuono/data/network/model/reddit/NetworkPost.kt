@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkPost(
     @SerializedName("kind") val kind: String? = null,
-    @SerializedName("data") val data: NetworkData? = NetworkData()
+    @SerializedName("data") val data: NetworkData? = null
 )

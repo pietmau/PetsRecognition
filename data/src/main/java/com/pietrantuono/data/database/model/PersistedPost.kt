@@ -3,7 +3,6 @@ package com.pietrantuono.data.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 @Entity
 data class PersistedPost(

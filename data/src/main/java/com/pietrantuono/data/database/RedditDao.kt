@@ -4,22 +4,29 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.pietrantuono.data.database.model.PersistedPost
+import com.pietrantuono.data.database.model.PostWithImages
 
 @Dao
 interface RedditDao {
+    @Transaction
     @Query("SELECT * FROM persistedpost")
-    fun getAll(): List<PersistedPost>
+    fun getAll(): List<PostWithImages>
 
+    @Transaction
     @Insert
-    fun insertAll(vararg posts: PersistedPost)
+    fun insertAll(vararg posts: PostWithImages)
 
+    @Transaction
     @Query("SELECT * FROM persistedpost WHERE score < :postScore ORDER BY score LIMIT :limit")
-    fun getBefore(postScore: Int, limit: Int): List<PersistedPost>
+    fun getBefore(postScore: Int, limit: Int): List<PostWithImages>
 
+    @Transaction
     @Query("SELECT * FROM persistedpost WHERE score > :postScore ORDER BY score LIMIT :limit")
-    fun getAfter(postScore: Int, limit: Int): List<PersistedPost>
+    fun getAfter(postScore: Int, limit: Int): List<PostWithImages>
 
+    @Transaction
     @Delete
     fun delete(post: PersistedPost)
 }
