@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class PersistedPost(
     @PrimaryKey
-    val name: String? = null,
+    val name: String,
     @ColumnInfo(name = "score")
     val score: Int? = null,
     @ColumnInfo(name = "kind")

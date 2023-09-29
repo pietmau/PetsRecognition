@@ -1,7 +1,6 @@
 package com.pietrantuono.domain
 
 import com.pietrantuono.domain.model.reddit.Post
-import com.pietrantuono.domain.model.reddit.Posts
 
 interface RedditRepository {
 

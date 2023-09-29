@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.pietrantuono.domain.GetPostsUseCase
+import com.pietrantuono.domain.model.reddit.Post
 import com.pietrantuono.movies2023.features.posts.pagination.PostsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.function.Consumer
@@ -29,17 +30,13 @@ class PostsViewModel @Inject constructor(
     }
 
     private fun getPosts() {
-//        viewModelScope.launch(Dispatchers.IO) {// Inject
-//            val posts: Posts = useCase.execute(GetPostsUseCase.Params())
-//            val data = posts.posts.map { it.data }.map { it?.title }.filterNotNull()
-//            _uiState.value = UiState.Content(data)
-//        }
     }
 
-    val items: Flow<PagingData<Pair<String, String>>> = Pager(
+    val items: Flow<PagingData<Post>> = Pager(
         config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = { PostsPagingSource(useCase) }
     )
         .flow
         .cachedIn(viewModelScope)
+
 }

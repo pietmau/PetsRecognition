@@ -10,5 +10,5 @@ class PostWithImages(
         parentColumn = "name",
         entityColumn = "postName",
     )
-    val images: List<Image>
+    val images: List<PersistedImage>
 )
