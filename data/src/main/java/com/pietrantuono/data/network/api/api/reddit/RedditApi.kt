@@ -8,8 +8,8 @@ import retrofit2.http.QueryMap
 
 interface RedditApi {
 
-    @GET("/r/{subReddit}/top/")
-    suspend fun getSubRedditTop(
+    @GET("/r/{subReddit}/")
+    suspend fun getSubReddit(
         @Path("subReddit") subReddit: String,
         @QueryMap queryMap: Map<String, String>
     ): NetowrkRedditResponse

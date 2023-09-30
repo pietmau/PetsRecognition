@@ -9,13 +9,14 @@ class RetrofitRepository @Inject constructor(
 ) : RedditRepository {
 
     override suspend fun getPosts(before: String?, after: String?, limit: Int?) =
-        client.getSubReddit(MEMES, limit, before, after, null).data
+        client.getSubReddit(FUNNY, limit, before, after, null).data
             ?.posts
             ?.filter { it.data != null }
-            ?.map { mapper.map(it.data!!).copy(kind = it.kind) }
+            ?.map { mapper.map(it) }
             ?: emptyList()
 
     private companion object {
         private const val MEMES = "memes"
+        private const val FUNNY = "funny"
     }
 }

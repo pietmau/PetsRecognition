@@ -6,9 +6,9 @@ interface RedditApiClient {
 
     suspend fun getSubReddit(
         subReddit: String,
-        limit: Int?,
-        before: String?,
-        after: String?,
-        query: String?
+        limit: Int? = null,
+        before: String? = null,
+        after: String? = null,
+        query: String? = null
     ): NetowrkRedditResponse
 }

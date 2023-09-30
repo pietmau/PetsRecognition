@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.pietrantuono.domain.model.reddit.Image
 
 class PostWithImages(
-    @Embedded val playlist: PersistedPost,
+    @Embedded val post: PersistedPost,
     @Relation(
         parentColumn = "name",
         entityColumn = "postName",
