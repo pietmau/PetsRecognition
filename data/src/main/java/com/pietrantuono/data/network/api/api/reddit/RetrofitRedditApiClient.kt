@@ -16,7 +16,9 @@ class RetrofitRedditApiClient @Inject constructor(
 
     private var redditApi = Retrofit.Builder()// TODO reuse!!!
         .baseUrl(BASE_URL).client(
-            Builder().addInterceptor(bearerTokenAuthInterceptor).addInterceptor(HttpLoggingInterceptor().apply { level = BODY }) // TODO remove
+            Builder()
+                .addInterceptor(bearerTokenAuthInterceptor)
+                .addInterceptor(HttpLoggingInterceptor().apply { level = BODY }) // TODO remove
                 .build()
         ).addConverterFactory(GsonConverterFactory.create()).build().create(RedditApi::class.java)
 
@@ -28,8 +30,7 @@ class RetrofitRedditApiClient @Inject constructor(
         query: String?,
     ): List<Post> {
         val response = redditApi.getSubReddit(subReddit, getQueryMap(limit, before, after))
-        val posts = response.data?.posts?.map { it.kind to it.data }
-        return posts?.filter { it.second == null }?.map { it.first to it.second!! }?.map { mapper.map(it) } ?: emptyList()
+        return mapper.map(response)
     }
 
     private fun getQueryMap(
