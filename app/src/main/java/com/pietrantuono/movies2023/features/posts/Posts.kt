@@ -9,15 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
+import com.pietrantuono.domain.model.reddit.Post
 
 @Composable
-fun PostsScreen(state: LazyPagingItems<Pair<String, String>>, actions: (Action) -> Unit = {}) {
+fun PostsScreen(state: LazyPagingItems<Post>, actions: (Action) -> Unit = {}) {
     LazyColumn {
         items(count = state.itemCount,
-            key = state.itemKey { it.second }) { position ->
+            key = state.itemKey { it.name }) { position ->
             Text(
                 modifier = Modifier.padding(48.dp),
-                text = state[position]!!.first!!
+                text = state[position]?.title ?: ""
             )
         }
     }

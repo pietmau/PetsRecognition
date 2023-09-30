@@ -1,5 +1,6 @@
 package com.pietrantuono.data.network.api.api.reddit
 
+import android.util.Log
 import com.pietrantuono.data.network.entity.reddit.NetowrkRedditResponseEntity
 import com.pietrantuono.domain.Mapper
 import com.pietrantuono.domain.model.reddit.Image
@@ -11,6 +12,7 @@ class NetworkDataEntityMapper @Inject constructor(): Mapper<NetowrkRedditRespons
         val posts = input.data?.posts
         val before = input.data?.before
         val after = input.data?.after
+        Log.e("NetworkDataEntityMapper", "map: before=$before after=$after")
         return posts?.filter { it.data != null }?.map { (kind, data) ->
             Post(
                 kind = kind,

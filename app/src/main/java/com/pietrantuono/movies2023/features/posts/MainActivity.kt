@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                             val viewModel: PostsViewModel = hiltViewModel()
                             val viewSate by viewModel.uiState.collectAsStateWithLifecycle(UiState.Content())
                             val items = viewModel.items.collectAsLazyPagingItems()
-                            //PostsScreen(items)
+                            PostsScreen(items)
                         }
                     }
                 }

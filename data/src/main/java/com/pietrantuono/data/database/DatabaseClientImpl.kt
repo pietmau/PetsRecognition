@@ -11,10 +11,10 @@ class DatabaseClientImpl(
     private val postWithImagesEntityToPostMapper: PostWithImagesEntityToPostMapper,
 ) : DatabaseClient {
 
-    override suspend fun insertPosts(posts: List<Post>) {
+    override suspend fun insertPosts(posts: List<Post>, key: String?) {
         redditDatabase.withTransaction {
             posts.forEach { post ->
-                redditDao.insert(postToPersistedPostEntityMapper.map(post))
+                redditDao.insert(postToPersistedPostEntityMapper.map(key to post))
                 post.images.forEach { image ->
                     redditDao.insert(imageToPersistedImageEntityMapper.map(post.name to image))
                 }

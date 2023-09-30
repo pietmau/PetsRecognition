@@ -19,7 +19,7 @@ interface RedditDao {
     suspend fun insert(post: PersistedImageEntity)
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity WHERE name = :key ORDER BY created DESC")
+    @Query("SELECT * FROM persistedpostentity WHERE page = :key ORDER BY created DESC")
     suspend fun getPosts(key: String): List<PostWithImagesEntity>
 
     @Transaction

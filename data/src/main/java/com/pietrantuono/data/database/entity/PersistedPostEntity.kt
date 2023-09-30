@@ -38,4 +38,6 @@ data class PersistedPostEntity(
     val before: String? = null,
     @ColumnInfo(name = "after")
     val after: String? = null,
+    @ColumnInfo(name = "page")
+    val page: String? = null,
 )

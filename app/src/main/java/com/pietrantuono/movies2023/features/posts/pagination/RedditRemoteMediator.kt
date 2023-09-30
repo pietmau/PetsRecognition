@@ -24,19 +24,21 @@ class RedditRemoteMediator @Inject constructor(
     override suspend fun initialize() = InitializeAction.LAUNCH_INITIAL_REFRESH
 
     override suspend fun load(loadType: LoadType, state: PagingState<String, Post>): MediatorResult {
+        Log.e("RedditRemoteMediator", "loadType: $loadType")
+
         val key = when (loadType) {
             REFRESH -> state.getNextItem()
             PREPEND -> state.getNextItem() ?: return Success(endOfPaginationReached = true)
             APPEND -> state.getPreviousItem() ?: return Success(endOfPaginationReached = true)
         }
-        Log.e("RedditRemoteMediator", "loadType: $loadType, key: $key")
+        Log.e("RedditRemoteMediator", "key: $key")
         return try {
             val posts = when (loadType) {
                 PREPEND -> apiClient.getSubReddit(subReddit = FUNNY, before = key, limit = state.config.pageSize)
                 else -> apiClient.getSubReddit(subReddit = FUNNY, after = key, limit = state.config.pageSize)
             }
             Log.e("RedditRemoteMediator", "posts: $posts")
-            databaseClient.insertPosts(posts)
+            databaseClient.insertPosts(posts, key)
             Success(endOfPaginationReached = posts.isEmpty())
         } catch (exception: Exception) {
             Error(exception)
