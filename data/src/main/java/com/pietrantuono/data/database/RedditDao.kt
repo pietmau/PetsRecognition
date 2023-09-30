@@ -8,28 +8,27 @@ import androidx.room.Transaction
 import com.pietrantuono.data.database.entity.PersistedImageEntity
 import com.pietrantuono.data.database.entity.PersistedPostEntity
 import com.pietrantuono.data.database.entity.PostWithImagesEntity
-import com.pietrantuono.domain.model.reddit.Post
 
 @Dao
 interface RedditDao {
 
     @Insert
-    fun insert(post: PersistedPostEntity)
+    suspend fun insert(post: PersistedPostEntity)
 
     @Insert
-    fun insert(post: PersistedImageEntity)
+    suspend fun insert(post: PersistedImageEntity)
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity WHERE score < :postScore ORDER BY score LIMIT :limit")
-    fun getBefore(postScore: Int, limit: Int): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity WHERE name = :key ORDER BY created DESC")
+    suspend fun getPosts(key: String): List<PostWithImagesEntity>
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity WHERE score > :postScore ORDER BY score LIMIT :limit")
-    fun getAfter(postScore: Int, limit: Int): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity ORDER BY created DESC LIMIT :limit")
+    suspend fun getPosts(limit: Int): List<PostWithImagesEntity>
 
     @Delete
-    fun delete(post: PersistedPostEntity)
+    suspend fun delete(post: PersistedPostEntity)
 
     @Delete
-    fun delete(image: PersistedImageEntity)
+    suspend fun delete(image: PersistedImageEntity)
 }

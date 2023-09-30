@@ -21,7 +21,7 @@ data class PersistedPostEntity(
     @ColumnInfo(name = "ups")
     val ups: Int? = null,
     @ColumnInfo(name = "created")
-    val created: Int? = null,
+    val created: Long? = null,
     @ColumnInfo(name = "subreddit_id")
     val subredditId: String? = null,
     @ColumnInfo(name = "id")
@@ -33,5 +33,9 @@ data class PersistedPostEntity(
     @ColumnInfo(name = "permalink")
     val permalink: String? = null,
     @ColumnInfo(name = "url")
-    val url: String? = null
+    val url: String? = null,
+    @ColumnInfo(name = "before")
+    val before: String? = null,
+    @ColumnInfo(name = "after")
+    val after: String? = null,
 )

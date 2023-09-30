@@ -6,18 +6,23 @@ import com.pietrantuono.domain.model.reddit.Post
 class DatabaseClientImpl(
     private val redditDatabase: RedditDatabase,
     private val redditDao: RedditDao,
-    private val postMapper: PostMapper,
-    private val imageMapper: ImageMapper,
+    private val postToPersistedPostEntityMapper: PostToPersistedPostEntityMapper,
+    private val imageToPersistedImageEntityMapper: ImageToPersistedImageEntityMapper,
+    private val postWithImagesEntityToPostMapper: PostWithImagesEntityToPostMapper,
 ) : DatabaseClient {
 
     override suspend fun insertPosts(posts: List<Post>) {
         redditDatabase.withTransaction {
             posts.forEach { post ->
-                redditDao.insert(postMapper.map(post))
+                redditDao.insert(postToPersistedPostEntityMapper.map(post))
                 post.images.forEach { image ->
-                    redditDao.insert(imageMapper.map(post.name to image))
+                    redditDao.insert(imageToPersistedImageEntityMapper.map(post.name to image))
                 }
             }
         }
     }
+
+    override suspend fun getPosts(key: String?, limit: Int) =
+        key?.let { redditDao.getPosts(key).map { postWithImagesEntityToPostMapper.map(it) } }
+            ?: redditDao.getPosts(limit).map { postWithImagesEntityToPostMapper.map(it) }
 }

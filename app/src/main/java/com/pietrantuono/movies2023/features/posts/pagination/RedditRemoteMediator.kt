@@ -11,11 +11,12 @@ import androidx.paging.RemoteMediator
 import androidx.paging.RemoteMediator.MediatorResult.Error
 import androidx.paging.RemoteMediator.MediatorResult.Success
 import com.pietrantuono.data.database.DatabaseClient
-import com.pietrantuono.data.network.api.api.reddit.RedditApiClient
+import com.pietrantuono.data.network.api.client.RedditApiClient
 import com.pietrantuono.domain.model.reddit.Post
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class RedditRemoteMediator(
+class RedditRemoteMediator @Inject constructor(
     private val apiClient: RedditApiClient,
     private val databaseClient: DatabaseClient,
 ) : RemoteMediator<String, Post>() {

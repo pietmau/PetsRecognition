@@ -1,5 +1,7 @@
-package com.pietrantuono.data.network.api.api.reddit
+package com.pietrantuono.data.network.api.client
 
+import com.pietrantuono.data.network.api.api.reddit.NetworkDataEntityMapper
+import com.pietrantuono.data.network.api.api.reddit.RedditApi
 import com.pietrantuono.data.network.api.interceptor.BearerTokenAuthInterceptor
 import com.pietrantuono.domain.model.reddit.Post
 import javax.inject.Inject

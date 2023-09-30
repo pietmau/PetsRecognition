@@ -3,13 +3,13 @@ package com.pietrantuono.data.network.entity.reddit
 import com.google.gson.annotations.SerializedName
 
 data class NetworkDataEntity(
-    @SerializedName("name") val name: String? = null,
+    @SerializedName("name") val name: String,
     @SerializedName("score") val score: Int? = null,
     @SerializedName("subreddit") val subreddit: String? = null,
     @SerializedName("thumbnail") val thumbnail: String? = null,
     @SerializedName("title") val title: String? = null,
     @SerializedName("ups") val ups: Int? = null,
-    @SerializedName("created") val created: Int? = null,
+    @SerializedName("created") val created: Long? = null,
     @SerializedName("preview") val preview: NetworkPreviewEntity? = NetworkPreviewEntity(),
     @SerializedName("subreddit_id") val subredditId: String? = null,
     @SerializedName("id") val id: String? = null,

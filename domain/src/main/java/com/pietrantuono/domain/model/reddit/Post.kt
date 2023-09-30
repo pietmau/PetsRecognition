@@ -2,12 +2,12 @@ package com.pietrantuono.domain.model.reddit
 
 data class Post(
     val kind: String? = null,
-    val name: String? = null,
+    val name: String,
     val subreddit: String? = null,
     val thumbnail: String? = null,
     val title: String? = null,
     val ups: Int? = null,
-    val created: Int? = null,
+    val created: Long? = null,
     val images: List<Image> = emptyList(),
     val subredditId: String? = null,
     val id: String? = null,

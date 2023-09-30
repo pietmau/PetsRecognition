@@ -1,4 +1,4 @@
-package com.pietrantuono.data.network.api.api.reddit
+package com.pietrantuono.data.network.api.client
 
 import com.pietrantuono.domain.model.reddit.Post
 

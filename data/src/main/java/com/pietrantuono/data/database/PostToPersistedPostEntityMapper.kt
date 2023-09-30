@@ -3,8 +3,9 @@ package com.pietrantuono.data.database
 import com.pietrantuono.data.database.entity.PersistedPostEntity
 import com.pietrantuono.domain.Mapper
 import com.pietrantuono.domain.model.reddit.Post
+import javax.inject.Inject
 
-class PostMapper : Mapper<Post, PersistedPostEntity> {
+class PostToPersistedPostEntityMapper @Inject constructor() : Mapper<Post, PersistedPostEntity> {
     override fun map(input: Post) =
         PersistedPostEntity(
             name = input.name,
@@ -20,7 +21,8 @@ class PostMapper : Mapper<Post, PersistedPostEntity> {
             subredditId = input.subredditId,
             id = input.id,
             numComments = input.numComments,
-            ups = input.ups
+            ups = input.ups,
+            before = input.before,
+            after = input.after
         )
-
 }

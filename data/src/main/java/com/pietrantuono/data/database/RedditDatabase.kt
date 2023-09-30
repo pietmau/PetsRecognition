@@ -7,5 +7,5 @@ import com.pietrantuono.data.database.entity.PersistedPostEntity
 
 @Database(entities = [PersistedPostEntity::class, PersistedImageEntity::class], version = 1, exportSchema = false)
 abstract class RedditDatabase : RoomDatabase() {
-    abstract fun userDao(): RedditDao
+    abstract fun redditDao(): RedditDao
 }
