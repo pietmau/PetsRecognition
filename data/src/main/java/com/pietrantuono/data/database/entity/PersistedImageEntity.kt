@@ -1,11 +1,11 @@
-package com.pietrantuono.data.database.model
+package com.pietrantuono.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class PersistedImage(
+data class PersistedImageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "url")

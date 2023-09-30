@@ -1,11 +1,11 @@
-package com.pietrantuono.data.database.model
+package com.pietrantuono.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class PersistedPost(
+data class PersistedPostEntity(
     @PrimaryKey
     val name: String,
     @ColumnInfo(name = "score")

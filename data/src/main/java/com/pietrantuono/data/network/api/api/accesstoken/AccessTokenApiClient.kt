@@ -1,6 +1,6 @@
 package com.pietrantuono.data.network.api.api.accesstoken
 
-import com.pietrantuono.data.network.model.accesstoken.AccessToken
+import com.pietrantuono.data.network.entity.accesstoken.AccessToken
 
 interface AccessTokenApiClient {
 

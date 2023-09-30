@@ -1,13 +1,13 @@
 package com.pietrantuono.data.network
 
-import com.pietrantuono.data.network.model.reddit.NetworkPost
+import com.pietrantuono.data.network.entity.reddit.NetworkPostEntity
 import com.pietrantuono.domain.Mapper
 import com.pietrantuono.domain.model.reddit.Image
 import com.pietrantuono.domain.model.reddit.Post
 import javax.inject.Inject
 
-class NetworkDataMapper @Inject constructor() : Mapper<NetworkPost, Post> {
-    override suspend fun map(input: NetworkPost) =
+class NetworkDataMapper @Inject constructor() : Mapper<NetworkPostEntity, Post> {
+    override suspend fun map(input: NetworkPostEntity) =
         Post(kind = input.kind,
             name = input.data?.name,
             title = input.data?.title,

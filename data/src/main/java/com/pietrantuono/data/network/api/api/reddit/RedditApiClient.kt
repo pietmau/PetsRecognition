@@ -1,6 +1,6 @@
 package com.pietrantuono.data.network.api.api.reddit
 
-import com.pietrantuono.data.network.model.reddit.NetowrkRedditResponse
+import com.pietrantuono.data.network.entity.reddit.NetowrkRedditResponseEntity
 
 interface RedditApiClient {
 
@@ -10,5 +10,5 @@ interface RedditApiClient {
         before: String? = null,
         after: String? = null,
         query: String? = null
-    ): NetowrkRedditResponse
+    ): NetowrkRedditResponseEntity
 }

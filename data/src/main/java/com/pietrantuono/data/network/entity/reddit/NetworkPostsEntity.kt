@@ -1,9 +1,9 @@
-package com.pietrantuono.data.network.model.reddit
+package com.pietrantuono.data.network.entity.reddit
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkPosts(
+data class NetworkPostsEntity(
     @SerializedName("after") val after: String? = null,
-    @SerializedName("children") val posts: List<NetworkPost> = emptyList(),
+    @SerializedName("children") val posts: List<NetworkPostEntity> = emptyList(),
     @SerializedName("before") val before: String? = null
 )

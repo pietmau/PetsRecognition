@@ -1,8 +1,7 @@
 package com.pietrantuono.data.network.api.api.accesstoken
 
-import com.pietrantuono.data.network.model.accesstoken.AccessToken
+import com.pietrantuono.data.network.entity.accesstoken.AccessToken
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

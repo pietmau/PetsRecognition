@@ -5,42 +5,30 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.pietrantuono.data.database.model.PersistedImage
-import com.pietrantuono.data.database.model.PersistedPost
-import com.pietrantuono.data.database.model.PostWithImages
+import com.pietrantuono.data.database.entity.PersistedImageEntity
+import com.pietrantuono.data.database.entity.PersistedPostEntity
+import com.pietrantuono.data.database.entity.PostWithImagesEntity
 
 @Dao
 interface RedditDao {
-    @Transaction
-    @Query("SELECT * FROM persistedpost")
-    fun getAll(): List<PostWithImages>
-
-    @Transaction
-    @Insert
-    fun insertAll(vararg posts: PostWithImages){
-        posts.forEach {
-            insert(it.post)
-            it.images.forEach { image ->
-                insert(image)
-            }
-        }
-    }
 
     @Insert
-    fun insert(post: PersistedPost)
+    fun insert(post: PersistedPostEntity)
 
     @Insert
-    fun insert(post: PersistedImage)
+    fun insert(post: PersistedImageEntity)
 
     @Transaction
-    @Query("SELECT * FROM persistedpost WHERE score < :postScore ORDER BY score LIMIT :limit")
-    fun getBefore(postScore: Int, limit: Int): List<PostWithImages>
+    @Query("SELECT * FROM persistedpostentity WHERE score < :postScore ORDER BY score LIMIT :limit")
+    fun getBefore(postScore: Int, limit: Int): List<PostWithImagesEntity>
 
     @Transaction
-    @Query("SELECT * FROM persistedpost WHERE score > :postScore ORDER BY score LIMIT :limit")
-    fun getAfter(postScore: Int, limit: Int): List<PostWithImages>
+    @Query("SELECT * FROM persistedpostentity WHERE score > :postScore ORDER BY score LIMIT :limit")
+    fun getAfter(postScore: Int, limit: Int): List<PostWithImagesEntity>
 
-    @Transaction
     @Delete
-    fun delete(post: PersistedPost)
+    fun delete(post: PersistedPostEntity)
+
+    @Delete
+    fun delete(image: PersistedImageEntity)
 }

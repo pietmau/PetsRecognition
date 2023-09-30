@@ -15,5 +15,5 @@ data class Post(
     val numComments: Int? = null,
     val permalink: String? = null,
     val url: String? = null,
-    val score: Int? = null
+    val score: Int? = null,
 )

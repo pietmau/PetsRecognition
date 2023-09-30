@@ -1,8 +1,8 @@
-package com.pietrantuono.data.network.model.reddit
+package com.pietrantuono.data.network.entity.reddit
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkImages(
+data class NetworkImagesEntity(
     @SerializedName("resolutions") val resolutions: List<NetworkResolutions> = emptyList(),
 )
 
