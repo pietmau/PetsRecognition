@@ -1,6 +1,6 @@
 package com.pietrantuono.data.network.api.api.reddit
 
-import com.pietrantuono.data.network.entity.reddit.NetowrkRedditResponseEntity
+import com.pietrantuono.domain.model.reddit.Post
 
 interface RedditApiClient {
 
@@ -9,6 +9,6 @@ interface RedditApiClient {
         limit: Int? = null,
         before: String? = null,
         after: String? = null,
-        query: String? = null
-    ): NetowrkRedditResponseEntity
+        query: String? = null,
+    ): List<Post>
 }

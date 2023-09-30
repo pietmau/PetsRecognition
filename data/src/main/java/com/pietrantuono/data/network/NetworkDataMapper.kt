@@ -7,7 +7,7 @@ import com.pietrantuono.domain.model.reddit.Post
 import javax.inject.Inject
 
 class NetworkDataMapper @Inject constructor() : Mapper<NetworkPostEntity, Post> {
-    override suspend fun map(input: NetworkPostEntity) =
+    override suspend fun map(input: Pair<String?, Any?>): Post =
         Post(kind = input.kind,
             name = input.data?.name,
             title = input.data?.title,

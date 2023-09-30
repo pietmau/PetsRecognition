@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import com.pietrantuono.data.database.entity.PersistedImageEntity
 import com.pietrantuono.data.database.entity.PersistedPostEntity
 import com.pietrantuono.data.database.entity.PostWithImagesEntity
+import com.pietrantuono.domain.model.reddit.Post
 
 @Dao
 interface RedditDao {
