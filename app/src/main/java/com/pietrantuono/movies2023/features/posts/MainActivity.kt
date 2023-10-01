@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pietrantuono.movies2023.features.posts.ui.PostsScreen
 import com.pietrantuono.movies2023.features.posts.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
 

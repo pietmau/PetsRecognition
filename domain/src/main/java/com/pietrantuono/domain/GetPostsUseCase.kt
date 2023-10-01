@@ -6,7 +6,15 @@ import javax.inject.Inject
 
 class GetPostsUseCase @Inject constructor(private val repository: RedditRepository) : UseCase<Params, List<Post>> { // TODO remove
 
-    override suspend fun execute(params: Params) = repository.getLatestPosts()
+    override suspend fun execute(params: Params) = when (params) {
+        is Params.Initial -> repository.getLatestPosts()
+        is Params.Next -> TODO()
+        is Params.Previous -> TODO()
+    }
 
-    data class Params(val before: String? = null, val after: String? = null, val limit: Int? = null)
+    sealed class Params {
+        object Initial : Params()
+        data class Next(val after: String) : Params()
+        data class Previous(val before: String) : Params()
+    }
 }

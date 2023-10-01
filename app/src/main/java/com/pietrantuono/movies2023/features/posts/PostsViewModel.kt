@@ -3,6 +3,7 @@ package com.pietrantuono.movies2023.features.posts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pietrantuono.domain.GetPostsUseCase
+import com.pietrantuono.domain.GetPostsUseCase.Params.Initial
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.function.Consumer
 import javax.inject.Inject
@@ -29,7 +30,7 @@ class PostsViewModel @Inject constructor(
     private fun getInitialPosts() {
         viewModelScope.launch(coroutineContext) {
             try {
-                val posts = useCase.execute(GetPostsUseCase.Params())
+                val posts = useCase.execute(Initial)
                 _uiState.value = UiState.Content(posts) // TODO update the state
             } catch (e: Exception) {
                 // TODO
