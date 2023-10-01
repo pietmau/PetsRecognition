@@ -24,6 +24,6 @@ class DatabaseClientImpl(
 
     override suspend fun getLatestPosts(limit: Int) = redditDao.getLatestPosts(limit).map { postWithImagesEntityToPostMapper.map(it) }
 
-    override suspend fun getPostsAfter(index: Long, limit: Int): List<Post> =
-        redditDao.getPostsAfter(index, limit).map { postWithImagesEntityToPostMapper.map(it) }
+    override suspend fun getPostsAfter(date: Long, limit: Int): List<Post> =
+        redditDao.getPostsAfter(date, limit).map { postWithImagesEntityToPostMapper.map(it) }
 }

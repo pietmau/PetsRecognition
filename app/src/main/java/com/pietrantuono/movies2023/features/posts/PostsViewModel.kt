@@ -48,7 +48,7 @@ class PostsViewModel @Inject constructor(
         val data = (_uiState.value as? Content)?.posts
         val nextPage = data?.getOrNull(indexOfLastItem) ?: return
         launch {
-            val posts = useCase.execute(GetPostsUseCase.Params.Next(nextPage.key ?: 0, nextPage.name))
+            val posts = useCase.execute(GetPostsUseCase.Params.Next(nextPage.createdUtc ?: 0, nextPage.name))
             Log.e("PostsViewModel", "getNextPosts " + posts.size + " " + posts.map { it.title }.joinToString(separator = " -- ") { it.toString() })
             updateState { copy(posts = data + posts) }
         }

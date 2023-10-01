@@ -24,12 +24,12 @@ class RedditRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
-        Log.e("RedditRepositoryImpl", "getNextPosts: $index, $page, $limit")
-        val posts = databaseClient.getPostsAfter(index, limit)
+    override suspend fun getNextPosts(date: Long, page: String, limit: Int): List<Post> {
+        Log.e("RedditRepositoryImpl", "getNextPosts: $date, $page, $limit")
+        val posts = databaseClient.getPostsAfter(date, limit)
         if (posts.isNotEmpty()) return posts
         getAndSavePostFromApi(page, limit)
-        return databaseClient.getPostsAfter(index, limit)
+        return databaseClient.getPostsAfter(date, limit)
     }
 
     private suspend fun getAndSavePostFromApi(page: String? = null, limit: Int? = null) {

@@ -20,11 +20,11 @@ interface RedditDao {
     suspend fun insert(post: PersistedImageEntity)
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity WHERE `key` > :index ORDER BY `key` ASC LIMIT :limit")
-    suspend fun getPostsAfter(index: Long, limit: Int): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity WHERE created_utc < :date ORDER BY created_utc DESC LIMIT :limit")
+    suspend fun getPostsAfter(date: Long, limit: Int): List<PostWithImagesEntity>
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity  ORDER BY `key` ASC LIMIT :limit")
+    @Query("SELECT * FROM persistedpostentity  ORDER BY created_utc DESC LIMIT :limit")
     suspend fun getLatestPosts(limit: Int): List<PostWithImagesEntity>
 
     @Delete
