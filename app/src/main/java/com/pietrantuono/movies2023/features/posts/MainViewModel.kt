@@ -7,6 +7,10 @@ import com.pietrantuono.domain.GetPostsUseCase
 import com.pietrantuono.domain.GetPostsUseCase.Params.Initial
 import com.pietrantuono.movies2023.features.posts.Action.GetInitialPosts
 import com.pietrantuono.movies2023.features.posts.Action.GetNextPosts
+import com.pietrantuono.movies2023.features.posts.Action.NavigationPerformed
+import com.pietrantuono.movies2023.features.posts.Action.PostClicked
+import com.pietrantuono.movies2023.features.posts.Destination.DETAIL
+import com.pietrantuono.movies2023.features.posts.Destination.NONE
 import com.pietrantuono.movies2023.features.posts.UiState.Content
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.function.Consumer
@@ -18,7 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class PostsViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val useCase: GetPostsUseCase,
     private val coroutineContext: CoroutineContext,
 ) : ViewModel(), Consumer<Action> {
@@ -31,6 +35,8 @@ class PostsViewModel @Inject constructor(
         when (action) {
             is GetInitialPosts -> getInitialPosts()
             is GetNextPosts -> getNextPosts(action.indexOfLastItem)
+            is NavigationPerformed -> updateState { copy(navDestination = NONE) }
+            is PostClicked -> updateState { copy(navDestination = DETAIL) }
         }
     }
 

@@ -24,9 +24,12 @@ import coil.compose.AsyncImage
 import com.pietrantuono.domain.model.reddit.Post
 
 @Composable
-fun RedditCard(post: Post = Post(title = "Title", createdUtc = 0, name = "")) {
+fun RedditCard(
+    modifier: Modifier = Modifier,
+    post: Post = Post(title = "Title", createdUtc = 0, name = ""),
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 4.dp, start = 4.dp, end = 4.dp)
             .defaultMinSize(minHeight = 56.dp)//TODO Externzalize
     ) {
