@@ -15,7 +15,7 @@ internal fun MainScreen() {
     ) {
         composable(route = HOME) {
             PostsScreen {
-                navController.navigate(it)
+                navController.navigateTo(it)
             }
         }
         composable(

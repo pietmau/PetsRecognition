@@ -4,18 +4,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.pietrantuono.movies2023.features.posts.Destination.Detail
-import com.pietrantuono.movies2023.features.posts.Destination.Home
-import com.pietrantuono.movies2023.features.posts.Destination.None
 
 internal const val HOME = "home"
 internal const val NAME = "name"
 internal const val DETAIL = "detail"
 
-internal fun NavHostController.navigate(destination: Destination) {
+internal fun NavHostController.navigateTo(destination: Destination) {
     when (destination) {
-        is None -> Unit
-        is Home -> Unit
         is Detail -> navigate("$DETAIL/${destination.name}")
+        else -> Unit
     }
 }
 
