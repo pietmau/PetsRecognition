@@ -32,8 +32,8 @@ class MainActivity : ComponentActivity() {
                         composable("home") {
                             val viewModel: PostsViewModel = hiltViewModel()
                             val viewSate by viewModel.uiState.collectAsStateWithLifecycle(UiState.Content())
-                            val items = viewModel.items.collectAsLazyPagingItems()
-                            PostsScreen(items)
+//                            val items = viewModel.items.collectAsLazyPagingItems()
+//                            PostsScreen(items)
                         }
                     }
                 }

@@ -4,8 +4,9 @@ import com.pietrantuono.data.database.DatabaseClient
 import com.pietrantuono.data.network.api.client.RedditApiClient
 import com.pietrantuono.data.networkchecker.NetworkChecker
 import com.pietrantuono.domain.RedditRepository
+import javax.inject.Inject
 
-class RedditRepositoryImpl(
+class RedditRepositoryImpl @Inject constructor(
     private val apiClient: RedditApiClient,
     private val databaseClient: DatabaseClient,
     private val networkChecker: NetworkChecker,

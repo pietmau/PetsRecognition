@@ -6,7 +6,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import com.pietrantuono.data.database.RedditDao
 import com.pietrantuono.domain.model.reddit.Post
@@ -22,9 +21,6 @@ import kotlinx.coroutines.flow.flowOn
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    factory: SuspendingPagingSourceFactory<String, Post>,
-    mediator: RedditRemoteMediator,
-    private val redditDao: RedditDao
 ) : ViewModel(), Consumer<Action> {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Content())
@@ -39,13 +35,4 @@ class PostsViewModel @Inject constructor(
     private fun getPosts() {
     }
 
-    @OptIn(ExperimentalPagingApi::class)
-    val items: Flow<PagingData<Post>> = Pager(
-        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-        remoteMediator = mediator,
-        pagingSourceFactory = {redditDao.getPosts()}
-    )
-        .flow
-        .flowOn(Dispatchers.IO)
-        .cachedIn(viewModelScope)
 }
