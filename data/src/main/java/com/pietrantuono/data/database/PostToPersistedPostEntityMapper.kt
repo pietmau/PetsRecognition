@@ -24,7 +24,8 @@ class PostToPersistedPostEntityMapper @Inject constructor() : Mapper<Post, Persi
             numComments = input.numComments,
             ups = input.ups,
             before = input.before,
-            after = input.after
+            after = input.after,
+            createdUtc = input.createdUtc,
         )
     }
 }

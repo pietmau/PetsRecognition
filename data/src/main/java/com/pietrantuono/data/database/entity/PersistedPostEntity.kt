@@ -48,4 +48,6 @@ data class PersistedPostEntity(
     val after: String? = null,
     @ColumnInfo(name = "page")
     val page: String? = null,
+    @ColumnInfo(name = "created_utc")
+    val createdUtc: Long,
 )

@@ -35,7 +35,8 @@ class NetworkDataEntityMapper @Inject constructor() : Mapper<NetowrkRedditRespon
                 url = data.url,
                 score = data.score,
                 before = before,
-                after = after
+                after = after,
+                createdUtc = data.createdUtc
             )
         } ?: emptyList()
     }

@@ -17,4 +17,5 @@ data class NetworkDataEntity(
     @SerializedName("num_comments") val numComments: Int? = null,
     @SerializedName("permalink") val permalink: String? = null,
     @SerializedName("url") val url: String? = null,
+    @SerializedName("created_utc") val createdUtc: Long
 )

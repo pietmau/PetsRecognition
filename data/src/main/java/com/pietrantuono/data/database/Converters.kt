@@ -30,6 +30,7 @@ class Converters { // TODO remove
             subreddit = value?.post?.subreddit ?: "",
             numComments = value?.post?.numComments ?: 0,
             permalink = value?.post?.permalink ?: "",
-            page = value?.post?.page
+            page = value?.post?.page,
+            createdUtc = value?.post?.createdUtc!!// TODO
         )
 }

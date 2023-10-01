@@ -33,6 +33,7 @@ class PostWithImagesEntityToPostMapper @Inject constructor() : Mapper<PostWithIm
                     height = it.height
                 )
             },
-            page = input.post.page
+            page = input.post.page,
+            createdUtc = input.post.createdUtc,
         )
 }

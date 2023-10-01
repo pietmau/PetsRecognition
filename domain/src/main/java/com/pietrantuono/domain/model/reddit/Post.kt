@@ -9,6 +9,7 @@ data class Post(
     val title: String? = null,
     val ups: Int? = null,
     val created: Long? = null,
+    val createdUtc: Long,
     val images: List<Image> = emptyList(),
     val subredditId: String? = null,
     val id: String? = null,
@@ -20,4 +21,5 @@ data class Post(
     val before: String? = null,
     val after: String? = null,
     val page: String? = null,
+
 )
