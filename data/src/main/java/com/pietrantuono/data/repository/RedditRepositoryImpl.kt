@@ -26,8 +26,9 @@ class RedditRepositoryImpl @Inject constructor(
 
     override suspend fun getNextPosts(date: Long, page: String, limit: Int): List<Post> {
         Log.e("RedditRepositoryImpl", "getNextPosts: $date, $page, $limit")
-        val posts = databaseClient.getPostsAfter(date, limit)
-        if (posts.isNotEmpty()) return posts
+        if (!networkChecker.isNetworkAvailable()) {
+            return databaseClient.getPostsAfter(date, limit)
+        }
         getAndSavePostFromApi(page, limit)
         return databaseClient.getPostsAfter(date, limit)
     }
@@ -42,8 +43,7 @@ class RedditRepositoryImpl @Inject constructor(
             )
             databaseClient.insertPosts(posts)
         } catch (e: Exception) {
-            e.printStackTrace()
-            TODO()
+            e.printStackTrace()// TODO
         }
     }
 
