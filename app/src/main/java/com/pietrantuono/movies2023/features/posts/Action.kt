@@ -1,5 +1,5 @@
 package com.pietrantuono.movies2023.features.posts
 
 sealed class Action {
-    object GetPosts : Action()
+    object GetInitialPosts : Action()
 }

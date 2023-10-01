@@ -6,7 +6,7 @@ import android.os.Build
 import javax.inject.Inject
 
 class NetworkCheckerImpl @Inject constructor(private val connectivityManager: ConnectivityManager) : NetworkChecker {
-    override suspend fun isNetworkAvailable() = isInternetConnected() && canPingGoogle()
+    override suspend fun isNetworkAvailable() = isInternetConnected()
 
     @SuppressLint("MissingPermission")
     private fun isInternetConnected() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -13,7 +13,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.pietrantuono.movies2023.features.posts.ui.theme.Movies2023Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,8 +31,9 @@ class MainActivity : ComponentActivity() {
                         composable("home") {
                             val viewModel: PostsViewModel = hiltViewModel()
                             val viewSate by viewModel.uiState.collectAsStateWithLifecycle(UiState.Content())
-//                            val items = viewModel.items.collectAsLazyPagingItems()
-//                            PostsScreen(items)
+                            PostsScreen(viewSate) { action ->
+                                viewModel.accept(action)
+                            }
                         }
                     }
                 }

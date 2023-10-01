@@ -24,5 +24,5 @@ class DatabaseClientImpl(
 
 
     override suspend fun getPosts(key: String?, limit: Int?) =
-        redditDao.getPosts(limit = limit, page = key).map { postWithImagesEntityToPostMapper.map(it) }
+        redditDao.getPosts().map { postWithImagesEntityToPostMapper.map(it) }
 }

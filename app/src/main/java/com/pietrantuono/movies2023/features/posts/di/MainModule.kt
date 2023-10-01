@@ -1,6 +1,7 @@
 package com.pietrantuono.movies2023.features.posts.di
 
 import android.content.Context
+import android.net.ConnectivityManager
 import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV
@@ -19,6 +20,10 @@ import com.pietrantuono.data.network.api.client.RetrofitRedditApiClient
 import com.pietrantuono.data.network.api.interceptor.BearerTokenAuthInterceptor
 import com.pietrantuono.data.network.api.tokenmanager.SharedPreferencesTokenManager
 import com.pietrantuono.data.network.api.tokenmanager.TokenManager
+import com.pietrantuono.data.networkchecker.NetworkChecker
+import com.pietrantuono.data.networkchecker.NetworkCheckerImpl
+import com.pietrantuono.data.repository.RedditRepositoryImpl
+import com.pietrantuono.domain.RedditRepository
 import com.pietrantuono.domain.model.reddit.Post
 import com.pietrantuono.movies2023.features.posts.pagination.RedditPagingSource
 import com.pietrantuono.movies2023.features.posts.pagination.SuspendingPagingSourceFactory
@@ -28,6 +33,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 
 @Module
@@ -43,7 +49,20 @@ interface MainModule {
     @Binds
     fun bindRedditApiClient(apiClient: RetrofitRedditApiClient): RedditApiClient
 
+    @Binds
+    fun bindRedditRepository(repositoryImpl: RedditRepositoryImpl): RedditRepository
+
+    @Binds
+    fun bindNetworkChecker(networkCheckerImpl: NetworkCheckerImpl): NetworkChecker
+
     companion object {
+
+        @Provides
+        fun provideCoroutineContext():CoroutineContext = Dispatchers.IO
+
+        @Provides
+        fun provideConnectivityManager(@ApplicationContext context: Context) =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         @Provides
         fun provideSourceFactory(source: RedditPagingSource) = SuspendingPagingSourceFactory<String, Post>(

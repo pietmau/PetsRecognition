@@ -2,37 +2,44 @@ package com.pietrantuono.movies2023.features.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.pietrantuono.data.database.RedditDao
-import com.pietrantuono.domain.model.reddit.Post
-import com.pietrantuono.movies2023.features.posts.pagination.RedditRemoteMediator
-import com.pietrantuono.movies2023.features.posts.pagination.SuspendingPagingSourceFactory
+import com.pietrantuono.domain.GetPostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.function.Consumer
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
+    private val useCase: GetPostsUseCase,
+    private val coroutineContext: CoroutineContext,
 ) : ViewModel(), Consumer<Action> {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Content())
-
     val uiState: Flow<UiState> = _uiState
+
     override fun accept(action: Action) {
         when (action) {
-            is Action.GetPosts -> getPosts()
+            is Action.GetInitialPosts -> getInitialPosts()
         }
     }
 
-    private fun getPosts() {
+    private fun getInitialPosts() {
+        viewModelScope.launch(coroutineContext) {
+            try {
+                val posts = useCase.execute(GetPostsUseCase.Params())
+                _uiState.value = UiState.Content(posts) // TODO update the state
+            } catch (e: Exception) {
+                // TODO
+                foo()
+            }
+        }
+    }
+
+    private fun foo() {
+
     }
 
 }

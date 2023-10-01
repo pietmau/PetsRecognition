@@ -20,8 +20,8 @@ interface RedditDao {
 
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity where page =:page ORDER BY created DESC LIMIT :limit")
-    suspend fun getPosts(page: String? = null, limit: Int? = null): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity ORDER BY created DESC")
+    suspend fun getPosts(): List<PostWithImagesEntity>
 
     @Delete
     suspend fun delete(post: PersistedPostEntity)
