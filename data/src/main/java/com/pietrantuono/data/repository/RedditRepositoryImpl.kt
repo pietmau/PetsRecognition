@@ -13,28 +13,28 @@ class RedditRepositoryImpl @Inject constructor(
     private val networkChecker: NetworkChecker,
 ) : RedditRepository {
 
-    override suspend fun getLatestPosts() =
-        if (!networkChecker.isNetworkAvailable()) {
-            databaseClient.getLatestPosts()
-        } else {
-            getPostFromApi()
-        }
-
-    override fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
-
+    override suspend fun getLatestPosts() = if (!networkChecker.isNetworkAvailable()) {
+        databaseClient.getLatestPosts()
+    } else {
+        getPostFromApi()
     }
 
-    private suspend fun getPostFromApi(page: String? = null, limit: Int? = null) =
-        try {
-            apiClient.getSubReddit(
-                subReddit = SUBREDDIT,
-                after = page,
-                limit = limit
-            ).also { databaseClient.insertPosts(it, page) }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emptyList()// TODO
+    override suspend fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
+        val posts = databaseClient.getPostsAfter(index, limit)
+        return posts.takeIf { it.isNotEmpty() } ?: getPostFromApi(page, limit).also {
+            databaseClient.insertPosts(it, page)
         }
+    }
+
+    private suspend fun getPostFromApi(page: String? = null, limit: Int? = null) = try {
+        apiClient.getSubReddit(
+            subReddit = SUBREDDIT,
+            after = page,
+            limit = limit
+        ).also { databaseClient.insertPosts(it, page) }
+    } catch (e: Exception) {
+        emptyList()// TODO
+    }
 
     private companion object {
         private const val SUBREDDIT = "funny" // Inject

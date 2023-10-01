@@ -6,5 +6,5 @@ interface RedditRepository {
 
     suspend fun getLatestPosts(): List<Post>
 
-    fun getNextPosts(index: Long, page: String, limit: Int): List<Post>
+    suspend fun getNextPosts(index: Long, page: String, limit: Int): List<Post>
 }

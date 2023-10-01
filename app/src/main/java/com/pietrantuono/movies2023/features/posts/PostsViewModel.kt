@@ -1,6 +1,5 @@
 package com.pietrantuono.movies2023.features.posts
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pietrantuono.domain.GetPostsUseCase
@@ -44,7 +43,7 @@ class PostsViewModel @Inject constructor(
         val data = (_uiState.value as? Content)?.data
         val nextPage = data?.getOrNull(indexOfLastItem) ?: return
         launch {
-            val posts = useCase.execute(GetPostsUseCase.Params.Next(indexOfLastItem, nextPage.page, nextPage.limit))
+            val posts = useCase.execute(GetPostsUseCase.Params.Next(indexOfLastItem.toLong(), nextPage.name))
             updateState { copy(data = data + posts) }
         }
         foo()
