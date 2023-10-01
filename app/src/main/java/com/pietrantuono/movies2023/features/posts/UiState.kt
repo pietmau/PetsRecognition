@@ -8,7 +8,3 @@ sealed class UiState {
 
     data class Content(val posts: List<Post> = emptyList(), override val navDestination: Destination = NONE) : UiState()
 }
-
-enum class Destination {
-    NONE, HOME, DETAIL
-}

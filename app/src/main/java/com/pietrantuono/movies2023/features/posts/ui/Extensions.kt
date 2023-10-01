@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 private const val OFFSET = 5
 
 @Composable
-internal fun LazyListState.rememberShouldPaginate() = remember {
+internal fun LazyListState.shouldPaginate() = remember {
     derivedStateOf {
         val totalItemsCount = layoutInfo.totalItemsCount
         val indexOfLastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: return@derivedStateOf false

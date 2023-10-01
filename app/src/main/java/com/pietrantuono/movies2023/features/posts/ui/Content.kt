@@ -18,7 +18,7 @@ import com.pietrantuono.movies2023.features.posts.UiState.Content
 @Composable
 internal fun Content(state: Content = Content(), actions: (Action) -> Unit = {}) {
     val listState = rememberLazyListState()
-    val shouldPaginate by listState.rememberShouldPaginate()
+    val shouldPaginate by listState.shouldPaginate()
 
     LazyColumn(state = listState) {
         items(items = state.posts, // TODO, add error and laoding
