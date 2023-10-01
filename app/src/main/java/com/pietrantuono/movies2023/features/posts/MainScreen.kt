@@ -2,6 +2,7 @@ package com.pietrantuono.movies2023.features.posts
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,14 +35,13 @@ internal fun MainScreen() {
                 viewModel.accept(NavigationPerformed)
             }
         }
-        composable(DETAIL) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize(),
-                color = Color.Red
-            ) {
+        composable(
+            route = "$DETAIL/{$NAME}",
+            arguments = detailNavArguments
+        ) { backStackEntry ->
+            val name = backStackEntry.arguments?.getString(NAME)
 
-            }
         }
     }
 }
+

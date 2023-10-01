@@ -9,8 +9,8 @@ import com.pietrantuono.movies2023.features.posts.Action.GetInitialPosts
 import com.pietrantuono.movies2023.features.posts.Action.GetNextPosts
 import com.pietrantuono.movies2023.features.posts.Action.NavigationPerformed
 import com.pietrantuono.movies2023.features.posts.Action.PostClicked
-import com.pietrantuono.movies2023.features.posts.Destination.DETAIL
-import com.pietrantuono.movies2023.features.posts.Destination.NONE
+import com.pietrantuono.movies2023.features.posts.Destination.Detail
+import com.pietrantuono.movies2023.features.posts.Destination.None
 import com.pietrantuono.movies2023.features.posts.UiState.Content
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.function.Consumer
@@ -35,8 +35,8 @@ class MainViewModel @Inject constructor(
         when (action) {
             is GetInitialPosts -> getInitialPosts()
             is GetNextPosts -> getNextPosts(action.indexOfLastItem)
-            is NavigationPerformed -> updateState { copy(navDestination = NONE) }
-            is PostClicked -> updateState { copy(navDestination = DETAIL) }
+            is NavigationPerformed -> updateState { copy(navDestination = None) }
+            is PostClicked -> updateState { copy(navDestination = Detail(action.post.name)) }
         }
     }
 
