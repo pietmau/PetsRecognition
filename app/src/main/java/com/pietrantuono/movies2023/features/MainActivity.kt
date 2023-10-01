@@ -1,4 +1,4 @@
-package com.pietrantuono.movies2023.features.posts
+package com.pietrantuono.movies2023.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.pietrantuono.movies2023.features.posts.ui.theme.RedditTheme
+import com.pietrantuono.movies2023.features.theme.RedditTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

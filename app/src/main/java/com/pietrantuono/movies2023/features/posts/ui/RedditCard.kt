@@ -26,7 +26,7 @@ import com.pietrantuono.domain.model.reddit.Post
 @Composable
 fun RedditCard(
     modifier: Modifier = Modifier,
-    post: Post = Post(title = "Title", createdUtc = 0, name = ""),
+    post: Post = Post(title = "Title", createdUtc = 0, name = "", id = ""),
 ) {
     Card(
         modifier = modifier
@@ -60,7 +60,7 @@ fun RedditCard(
 }
 
 @Composable
-private fun ThumbNailImage(post: Post = Post(title = "Title", createdUtc = 0, name = "")) {
+private fun ThumbNailImage(post: Post = Post(title = "Title", createdUtc = 0, name = "", id = "")) {
     var hideImage by remember { mutableStateOf(false) }
     if (!hideImage) {
         AsyncImage(

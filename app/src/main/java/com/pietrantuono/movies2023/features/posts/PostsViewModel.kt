@@ -4,8 +4,8 @@ import com.pietrantuono.domain.GetPostsUseCase
 import com.pietrantuono.domain.GetPostsUseCase.Params.Initial
 import com.pietrantuono.domain.GetPostsUseCase.Params.Next
 import com.pietrantuono.movies2023.common.RedditViewModel
-import com.pietrantuono.movies2023.features.posts.Destination.Detail
-import com.pietrantuono.movies2023.features.posts.Destination.None
+import com.pietrantuono.movies2023.features.Destination.Detail
+import com.pietrantuono.movies2023.features.Destination.None
 import com.pietrantuono.movies2023.features.posts.PostsAction.GetInitialPosts
 import com.pietrantuono.movies2023.features.posts.PostsAction.GetNextPosts
 import com.pietrantuono.movies2023.features.posts.PostsAction.NavigationPerformed
@@ -17,19 +17,19 @@ import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class PostsViewModel @Inject constructor(
     private val useCase: GetPostsUseCase,
     coroutineContext: CoroutineContext,
 ) : RedditViewModel<PostsViewState, PostsAction>(coroutineContext) {
 
     override val _viewState: MutableStateFlow<PostsViewState> = MutableStateFlow(Content())
 
-    override fun accept(postsAction: PostsAction) {
-        when (postsAction) {
+    override fun accept(action: PostsAction) {
+        when (action) {
             is GetInitialPosts -> getInitialPosts()
-            is GetNextPosts -> getNextPosts(postsAction.indexOfLastItem)
+            is GetNextPosts -> getNextPosts(action.indexOfLastItem)
             is NavigationPerformed -> updateState { copy(navDestination = None) }
-            is PostClicked -> updateState { copy(navDestination = Detail(postsAction.post.name)) }
+            is PostClicked -> updateState { copy(navDestination = Detail(action.post.id)) }
         }
     }
 

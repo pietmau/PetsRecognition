@@ -12,7 +12,7 @@ data class Post(
     val createdUtc: Long,   //TODO add default
     val images: List<Image> = emptyList(),
     val subredditId: String? = null,
-    val id: String? = null,
+    val id: String,
     val author: String? = null,
     val numComments: Int? = null,
     val permalink: String? = null,

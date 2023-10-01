@@ -4,18 +4,17 @@ import android.util.Log
 import com.pietrantuono.data.database.DatabaseClient
 import com.pietrantuono.data.network.api.client.RedditApiClient
 import com.pietrantuono.data.networkchecker.NetworkChecker
-import com.pietrantuono.domain.RedditRepository
+import com.pietrantuono.domain.PostsRepository
 import com.pietrantuono.domain.model.reddit.Post
 import javax.inject.Inject
 
-class RedditRepositoryImpl @Inject constructor(
+class PostsRepositoryImpl @Inject constructor(
     private val apiClient: RedditApiClient,
     private val databaseClient: DatabaseClient,
     private val networkChecker: NetworkChecker,
-) : RedditRepository {
+) : PostsRepository {
 
     override suspend fun getLatestPosts(): List<Post> {
-        Log.e("RedditRepositoryImpl", "getLatestPosts")
         return if (!networkChecker.isNetworkAvailable()) {
             databaseClient.getLatestPosts(defaultPageSize)
         } else {
@@ -25,7 +24,6 @@ class RedditRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getNextPosts(date: Long, page: String, limit: Int): List<Post> {
-        Log.e("RedditRepositoryImpl", "getNextPosts: $date, $page, $limit")
         if (!networkChecker.isNetworkAvailable()) {
             return databaseClient.getPostsAfter(date, limit)
         }
@@ -34,7 +32,6 @@ class RedditRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getAndSavePostFromApi(page: String? = null, limit: Int? = null) {
-        Log.e("RedditRepositoryImpl", "getAndSavePostFromApi: $page, $limit")
         try {
             val posts = apiClient.getSubReddit(
                 subReddit = SUBREDDIT,

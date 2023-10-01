@@ -1,12 +1,12 @@
-package com.pietrantuono.movies2023.features.posts
+package com.pietrantuono.movies2023.features
 
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.pietrantuono.movies2023.features.posts.Destination.Detail
+import com.pietrantuono.movies2023.features.Destination.Detail
 
 internal const val HOME = "home"
-internal const val NAME = "name"
+internal const val ID = "id"
 internal const val DETAIL = "detail"
 
 internal fun NavHostController.navigateTo(destination: Destination) {
@@ -23,4 +23,4 @@ sealed class Destination {
 }
 
 internal val detailNavArguments
-    get() = listOf(navArgument(NAME) { type = NavType.StringType })
+    get() = listOf(navArgument(ID) { type = NavType.StringType })

@@ -1,7 +1,8 @@
 package com.pietrantuono.movies2023.features.posts
 
 import com.pietrantuono.domain.model.reddit.Post
-import com.pietrantuono.movies2023.features.posts.Destination.None
+import com.pietrantuono.movies2023.features.Destination
+import com.pietrantuono.movies2023.features.Destination.None
 
 sealed class PostsViewState {
     abstract val navDestination: Destination

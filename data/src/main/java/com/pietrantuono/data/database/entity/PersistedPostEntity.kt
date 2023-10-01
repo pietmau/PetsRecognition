@@ -33,7 +33,7 @@ data class PersistedPostEntity(
     @ColumnInfo(name = "subreddit_id")
     val subredditId: String? = null,
     @ColumnInfo(name = "id")
-    val id: String? = null,
+    val id: String,
     @ColumnInfo(name = "author")
     val author: String? = null,
     @ColumnInfo(name = "num_comments")

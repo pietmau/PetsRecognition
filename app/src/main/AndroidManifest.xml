@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Movies2023"
         tools:targetApi="31">
         <activity
-            android:name=".features.posts.MainActivity"
+            android:name=".features.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Movies2023">

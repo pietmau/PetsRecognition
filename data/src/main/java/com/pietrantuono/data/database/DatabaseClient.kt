@@ -7,5 +7,5 @@ interface DatabaseClient {
 
     suspend fun getLatestPosts(limit: Int): List<Post>
 
-    suspend fun getPostsAfter(index: Long, limit: Int): List<Post>
+    suspend fun getPostsAfter(date: Long, limit: Int): List<Post>
 }

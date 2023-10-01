@@ -1,4 +1,4 @@
-package com.pietrantuono.movies2023.features.posts.di
+package com.pietrantuono.movies2023.features.di
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -22,9 +22,8 @@ import com.pietrantuono.data.network.api.tokenmanager.SharedPreferencesTokenMana
 import com.pietrantuono.data.network.api.tokenmanager.TokenManager
 import com.pietrantuono.data.networkchecker.NetworkChecker
 import com.pietrantuono.data.networkchecker.NetworkCheckerImpl
-import com.pietrantuono.data.repository.RedditRepositoryImpl
-import com.pietrantuono.domain.RedditRepository
-import com.pietrantuono.domain.model.reddit.Post
+import com.pietrantuono.data.repository.PostsRepositoryImpl
+import com.pietrantuono.domain.PostsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -48,7 +47,7 @@ interface MainModule {
     fun bindRedditApiClient(apiClient: RetrofitRedditApiClient): RedditApiClient
 
     @Binds
-    fun bindRedditRepository(repositoryImpl: RedditRepositoryImpl): RedditRepository
+    fun bindRedditRepository(repositoryImpl: PostsRepositoryImpl): PostsRepository
 
     @Binds
     fun bindNetworkChecker(networkCheckerImpl: NetworkCheckerImpl): NetworkChecker

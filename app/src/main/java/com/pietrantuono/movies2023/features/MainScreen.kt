@@ -1,4 +1,4 @@
-package com.pietrantuono.movies2023.features.posts
+package com.pietrantuono.movies2023.features
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +19,10 @@ internal fun MainScreen() {
             }
         }
         composable(
-            route = "$DETAIL/{$NAME}",
+            route = "$DETAIL/{$ID}",
             arguments = detailNavArguments
         ) {
-            val name = it.arguments?.getString(NAME)
+            val name = it.arguments?.getString(ID)
             Text(text = name ?: "No name")
         }
     }

@@ -1,4 +1,4 @@
-package com.pietrantuono.movies2023.features.posts.ui.theme
+package com.pietrantuono.movies2023.features.theme
 
 import android.app.Activity
 import android.os.Build
