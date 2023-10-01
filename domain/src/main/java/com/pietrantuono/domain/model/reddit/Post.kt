@@ -3,13 +3,13 @@ package com.pietrantuono.domain.model.reddit
 data class Post(
     val key: Long = 0,
     val kind: String? = null,
-    val name: String,
+    val name: String, //TODO add default
     val subreddit: String? = null,
     val thumbnail: String? = null,
     val title: String? = null,
     val ups: Int? = null,
     val created: Long? = null,
-    val createdUtc: Long,
+    val createdUtc: Long,   //TODO add default
     val images: List<Image> = emptyList(),
     val subredditId: String? = null,
     val id: String? = null,
@@ -21,5 +21,4 @@ data class Post(
     val before: String? = null,
     val after: String? = null,
     val page: String? = null,
-
 )

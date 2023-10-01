@@ -25,8 +25,6 @@ import com.pietrantuono.data.networkchecker.NetworkCheckerImpl
 import com.pietrantuono.data.repository.RedditRepositoryImpl
 import com.pietrantuono.domain.RedditRepository
 import com.pietrantuono.domain.model.reddit.Post
-import com.pietrantuono.movies2023.features.posts.pagination.RedditPagingSource
-import com.pietrantuono.movies2023.features.posts.pagination.SuspendingPagingSourceFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -63,12 +61,6 @@ interface MainModule {
         @Provides
         fun provideConnectivityManager(@ApplicationContext context: Context) =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        @Provides
-        fun provideSourceFactory(source: RedditPagingSource) = SuspendingPagingSourceFactory<String, Post>(
-            dispatcher = Dispatchers.IO,
-            delegate = { source }
-        )
 
         @Provides
         fun provideBearerTokenAuthInterceptor(tokenManager: TokenManager, accessTokenApiClient: RetrofitAccessTokenApiClient) =

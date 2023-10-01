@@ -15,6 +15,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.pietrantuono.domain.model.reddit.Post
 import com.pietrantuono.movies2023.features.posts.Action
 import com.pietrantuono.movies2023.features.posts.UiState.Content
 
@@ -26,16 +28,7 @@ internal fun Content(state: Content, actions: (Action) -> Unit = {}) {
     LazyColumn(state = listState) {
         items(items = state.posts, // TODO, add error and laoding
             key = { it.name }) { post ->
-            Card(modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)) {//TODO Externzalize
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = post.title ?: "", // TODO add better default
-                        modifier = Modifier.padding(16.dp), //TODO Externzalize
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
-
-            }
+            RedditCard(post)
         }
     }
     Spacer(modifier = Modifier.padding(top = 4.dp)) // TODO Externzalizex
@@ -49,4 +42,3 @@ internal fun Content(state: Content, actions: (Action) -> Unit = {}) {
         }
     }
 }
-
