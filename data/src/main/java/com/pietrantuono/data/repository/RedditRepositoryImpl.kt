@@ -4,6 +4,7 @@ import com.pietrantuono.data.database.DatabaseClient
 import com.pietrantuono.data.network.api.client.RedditApiClient
 import com.pietrantuono.data.networkchecker.NetworkChecker
 import com.pietrantuono.domain.RedditRepository
+import com.pietrantuono.domain.model.reddit.Post
 import javax.inject.Inject
 
 class RedditRepositoryImpl @Inject constructor(
@@ -18,6 +19,10 @@ class RedditRepositoryImpl @Inject constructor(
         } else {
             getPostFromApi()
         }
+
+    override fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
+
+    }
 
     private suspend fun getPostFromApi(page: String? = null, limit: Int? = null) =
         try {

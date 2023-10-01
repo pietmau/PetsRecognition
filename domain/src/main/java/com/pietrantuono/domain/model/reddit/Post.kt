@@ -1,6 +1,7 @@
 package com.pietrantuono.domain.model.reddit
 
 data class Post(
+    val key: Long = 0,
     val kind: String? = null,
     val name: String,
     val subreddit: String? = null,
@@ -18,5 +19,5 @@ data class Post(
     val score: Int? = null,
     val before: String? = null,
     val after: String? = null,
-    val page: String? = null
+    val page: String? = null,
 )

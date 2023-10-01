@@ -5,10 +5,11 @@ import com.pietrantuono.data.database.entity.PostWithImagesEntity
 import com.pietrantuono.domain.model.reddit.Image
 import com.pietrantuono.domain.model.reddit.Post
 
-class Converters {
+class Converters { // TODO remove
     @TypeConverter
-    fun fromTimestamp(value: PostWithImagesEntity?): Post =
+    fun fromPostWithImagesEntity(value: PostWithImagesEntity?): Post =
         Post(
+            key = value?.post?.key ?: 0,
             name = value?.post?.name ?: "",
             title = value?.post?.title ?: "",
             author = value?.post?.author ?: "",

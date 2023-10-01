@@ -9,6 +9,7 @@ import javax.inject.Inject
 class PostWithImagesEntityToPostMapper @Inject constructor() : Mapper<PostWithImagesEntity, Post> {
     override fun map(input: PostWithImagesEntity) =
         Post(
+            key= input.post.key,
             name = input.post.name,
             title = input.post.title,
             author = input.post.author,

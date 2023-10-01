@@ -1,5 +1,6 @@
 package com.pietrantuono.movies2023.features.posts
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pietrantuono.domain.GetPostsUseCase
@@ -28,21 +29,46 @@ class PostsViewModel @Inject constructor(
     override fun accept(action: Action) {
         when (action) {
             is GetInitialPosts -> getInitialPosts()
-            is GetNextPosts -> TODO()
+            is GetNextPosts -> getNextPosts(action.indexOfLastItem)
         }
     }
 
     private fun getInitialPosts() {
         launch {
-            try {
-                _uiState.value = Content(useCase.execute(Initial))
-            } catch (e: Exception) {
-                // TODO
-            }
+            val posts = useCase.execute(Initial)
+            updateState { copy(data = data + posts) }
+        }
+    }
+
+    private fun getNextPosts(indexOfLastItem: Int) {
+        val data = (_uiState.value as? Content)?.data
+        val nextPage = data?.getOrNull(indexOfLastItem) ?: return
+        launch {
+            val posts = useCase.execute(GetPostsUseCase.Params.Next(indexOfLastItem, nextPage.page, nextPage.limit))
+            updateState { copy(data = data + posts) }
+        }
+        foo()
+    }
+
+    private fun foo() {
+
+    }
+
+    private fun updateState(reducer: Content.() -> UiState) {
+        val currentState = _uiState.value as? Content ?: return
+        val newState = currentState.reducer()
+        if (newState != currentState) {
+            _uiState.value = newState
         }
     }
 
     private fun launch(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(coroutineContext, block = block)
+        viewModelScope.launch(coroutineContext) {
+            try {
+                block()
+            } catch (e: Exception) {
+                // TODO
+            }
+        }
     }
 }
