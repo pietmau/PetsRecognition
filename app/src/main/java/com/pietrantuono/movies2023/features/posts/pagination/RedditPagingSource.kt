@@ -34,7 +34,7 @@ class RedditPagingSource @Inject constructor(
         )
     }
 
-    private suspend fun posts(params: String?, loadSize: Int) = redditDatabaseClient.getPosts(params, loadSize)
+    private suspend fun posts(params: String?, loadSize: Int) = redditDatabaseClient.getLatestPosts()
 
     override fun getRefreshKey(state: PagingState<String, Post>): String? {
         val let = state.anchorPosition?.let { state.closestItemToPosition(it) }

@@ -12,24 +12,24 @@ class RedditRepositoryImpl @Inject constructor(
     private val networkChecker: NetworkChecker,
 ) : RedditRepository {
 
-    override suspend fun getPosts(before: String?, after: String?, limit: Int?) =
+    override suspend fun getLatestPosts() =
         if (!networkChecker.isNetworkAvailable()) {
-            databaseClient.getPosts(after, limit)
+            databaseClient.getLatestPosts()
         } else {
-            databaseClient.getPosts(after, limit).ifEmpty {
-                getPostFromApi(after, limit)
-            }
+            getPostFromApi()
         }
 
-    private suspend fun getPostFromApi(page: String?, limit: Int?) = try {
-        apiClient.getSubReddit(
-            subReddit = SUBREDDIT,
-            after = page,
-            limit = limit
-        ).also { databaseClient.insertPosts(it, page) }
-    } catch (e: Exception) { // TODO
-        emptyList()
-    }
+    private suspend fun getPostFromApi(page: String? = null, limit: Int? = null) =
+        try {
+            apiClient.getSubReddit(
+                subReddit = SUBREDDIT,
+                after = page,
+                limit = limit
+            ).also { databaseClient.insertPosts(it, page) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()// TODO
+        }
 
     private companion object {
         private const val SUBREDDIT = "funny" // Inject

@@ -3,6 +3,7 @@ package com.pietrantuono.data.database
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.pietrantuono.data.database.entity.PersistedImageEntity
@@ -12,16 +13,20 @@ import com.pietrantuono.data.database.entity.PostWithImagesEntity
 @Dao
 interface RedditDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(post: PersistedPostEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(post: PersistedImageEntity)
 
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity ORDER BY created DESC")
-    suspend fun getPosts(): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity WHERE page = :page ORDER BY created DESC")
+    suspend fun getPosts(page: String): List<PostWithImagesEntity>
+
+    @Transaction
+    @Query("SELECT * FROM persistedpostentity  ORDER BY created DESC ")
+    suspend fun getLatestPosts(): List<PostWithImagesEntity>
 
     @Delete
     suspend fun delete(post: PersistedPostEntity)
