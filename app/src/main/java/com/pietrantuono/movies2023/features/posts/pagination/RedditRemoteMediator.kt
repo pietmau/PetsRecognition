@@ -38,7 +38,7 @@ class RedditRemoteMediator @Inject constructor(
                 else -> apiClient.getSubReddit(subReddit = FUNNY, after = key, limit = state.config.pageSize)
             }
             Log.e("RedditRemoteMediator", "posts (${posts.size} ): $posts")
-            databaseClient.insertPosts(posts, key)
+            //databaseClient.insertPosts(posts, key)
             Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
             Error(exception)

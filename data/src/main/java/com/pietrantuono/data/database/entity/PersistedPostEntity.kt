@@ -2,9 +2,15 @@ package com.pietrantuono.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    indices = [Index(
+        value = ["name"],
+        unique = true
+    )]
+)
 data class PersistedPostEntity(
     @PrimaryKey(autoGenerate = true)
     val key: Long = 0,

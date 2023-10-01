@@ -1,5 +1,6 @@
 package com.pietrantuono.movies2023.features.posts
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pietrantuono.domain.GetPostsUseCase
@@ -26,6 +27,7 @@ class PostsViewModel @Inject constructor(
     val uiState: Flow<UiState> = _uiState
 
     override fun accept(action: Action) {
+        Log.e("PostsViewModel", "accept: $action")
         when (action) {
             is GetInitialPosts -> getInitialPosts()
             is GetNextPosts -> getNextPosts(action.indexOfLastItem)
@@ -33,24 +35,23 @@ class PostsViewModel @Inject constructor(
     }
 
     private fun getInitialPosts() {
+        Log.e("PostsViewModel", "getInitialPosts")
         launch {
             val posts = useCase.execute(Initial)
-            updateState { copy(data = data + posts) }
+            Log.e("PostsViewModel", "getInitialPosts " + posts.size + " " + posts.map { it.title }.joinToString(separator = " -- ") { it.toString() })
+            updateState { copy(posts = this.posts + posts) }
         }
     }
 
     private fun getNextPosts(indexOfLastItem: Int) {
-        val data = (_uiState.value as? Content)?.data
+        Log.e("PostsViewModel", "getNextPosts")
+        val data = (_uiState.value as? Content)?.posts
         val nextPage = data?.getOrNull(indexOfLastItem) ?: return
         launch {
-            val posts = useCase.execute(GetPostsUseCase.Params.Next(indexOfLastItem.toLong(), nextPage.name))
-            updateState { copy(data = data + posts) }
+            val posts = useCase.execute(GetPostsUseCase.Params.Next(nextPage.created ?: 0, nextPage.name))
+            Log.e("PostsViewModel", "getNextPosts " + posts.size + " " + posts.map { it.title }.joinToString(separator = " -- ") { it.toString() })
+            updateState { copy(posts = data + posts) }
         }
-        foo()
-    }
-
-    private fun foo() {
-
     }
 
     private fun updateState(reducer: Content.() -> UiState) {

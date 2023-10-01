@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pietrantuono.movies2023.features.posts.Action
-import com.pietrantuono.movies2023.features.posts.Action.GetNextPosts
 import com.pietrantuono.movies2023.features.posts.Action.GetInitialPosts
+import com.pietrantuono.movies2023.features.posts.Action.GetNextPosts
 import com.pietrantuono.movies2023.features.posts.UiState
 
 @Composable
@@ -23,7 +23,8 @@ fun PostsScreen(state: UiState, actions: (Action) -> Unit = {}) {
     val shouldPaginate by lazyColumnListState.rememberShouldPaginate()
 
     LazyColumn(state = lazyColumnListState) {
-        items((state as UiState.Content).data) { post ->
+        items(items = (state as UiState.Content).posts, // TODO
+            key = { it.name }) { post ->
             Text(
                 text = post.title ?: "", // TODO
                 modifier = Modifier.padding(16.dp),
@@ -34,8 +35,11 @@ fun PostsScreen(state: UiState, actions: (Action) -> Unit = {}) {
         actions(GetInitialPosts)
     }
     LaunchedEffect(shouldPaginate) {
-        val indexOfLastItem = lazyColumnListState.layoutInfo.totalItemsCount - 1
-        actions(GetNextPosts(indexOfLastItem))
+        if (shouldPaginate) {
+            Log.e("PostsScreen", "shouldPaginate: $shouldPaginate")
+            val indexOfLastItem = lazyColumnListState.layoutInfo.totalItemsCount - 1
+            actions(GetNextPosts(indexOfLastItem))
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package com.pietrantuono.data.repository
 
+import android.util.Log
 import com.pietrantuono.data.database.DatabaseClient
 import com.pietrantuono.data.network.api.client.RedditApiClient
 import com.pietrantuono.data.networkchecker.NetworkChecker
@@ -13,27 +14,37 @@ class RedditRepositoryImpl @Inject constructor(
     private val networkChecker: NetworkChecker,
 ) : RedditRepository {
 
-    override suspend fun getLatestPosts() = if (!networkChecker.isNetworkAvailable()) {
-        databaseClient.getLatestPosts()
-    } else {
-        getPostFromApi()
-    }
-
-    override suspend fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
-        val posts = databaseClient.getPostsAfter(index, limit)
-        return posts.takeIf { it.isNotEmpty() } ?: getPostFromApi(page, limit).also {
-            databaseClient.insertPosts(it, page)
+    override suspend fun getLatestPosts(): List<Post> {
+        Log.e("RedditRepositoryImpl", "getLatestPosts")
+        return if (!networkChecker.isNetworkAvailable()) {
+            databaseClient.getLatestPosts(defaultPageSize)
+        } else {
+            getAndSavePostFromApi(limit = defaultPageSize)
+            databaseClient.getLatestPosts(defaultPageSize)
         }
     }
 
-    private suspend fun getPostFromApi(page: String? = null, limit: Int? = null) = try {
-        apiClient.getSubReddit(
-            subReddit = SUBREDDIT,
-            after = page,
-            limit = limit
-        ).also { databaseClient.insertPosts(it, page) }
-    } catch (e: Exception) {
-        emptyList()// TODO
+    override suspend fun getNextPosts(index: Long, page: String, limit: Int): List<Post> {
+        Log.e("RedditRepositoryImpl", "getNextPosts: $index, $page, $limit")
+        val posts = databaseClient.getPostsAfter(index, limit)
+        if (posts.isNotEmpty()) return posts
+        getAndSavePostFromApi(page, limit)
+        return databaseClient.getPostsAfter(index, limit)
+    }
+
+    private suspend fun getAndSavePostFromApi(page: String? = null, limit: Int? = null) {
+        Log.e("RedditRepositoryImpl", "getAndSavePostFromApi: $page, $limit")
+        try {
+            val posts = apiClient.getSubReddit(
+                subReddit = SUBREDDIT,
+                after = page,
+                limit = limit
+            )
+            databaseClient.insertPosts(posts)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            TODO()
+        }
     }
 
     private companion object {

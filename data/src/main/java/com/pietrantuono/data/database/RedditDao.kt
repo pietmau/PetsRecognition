@@ -19,18 +19,13 @@ interface RedditDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(post: PersistedImageEntity)
 
-
-//    @Transaction
-//    @Query("SELECT * FROM persistedpostentity WHERE page = :page ORDER BY created DESC")
-//    suspend fun getPosts(page: String): List<PostWithImagesEntity>
+    @Transaction
+    @Query("SELECT * FROM persistedpostentity WHERE created  < :created ORDER BY created DESC LIMIT :limit")
+    suspend fun getPostsAfter(created: Long, limit: Int): List<PostWithImagesEntity>
 
     @Transaction
-    @Query("SELECT * FROM persistedpostentity WHERE `key` > :index ORDER BY created DESC LIMIT :limit")
-    suspend fun getPostsAfter(index: Long, limit: Int): List<PostWithImagesEntity>
-
-    @Transaction
-    @Query("SELECT * FROM persistedpostentity  ORDER BY created DESC ")
-    suspend fun getLatestPosts(): List<PostWithImagesEntity>
+    @Query("SELECT * FROM persistedpostentity  ORDER BY created DESC LIMIT :limit")
+    suspend fun getLatestPosts(limit: Int): List<PostWithImagesEntity>
 
     @Delete
     suspend fun delete(post: PersistedPostEntity)
