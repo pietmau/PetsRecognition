@@ -13,13 +13,14 @@ class RedditPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
         Log.e("RedditPagingSource", "LOAD: $params key=${params.key}")
-        if(params is LoadParams.Prepend) {
+        if (params is LoadParams.Prepend) {
             return LoadResult.Page(
                 data = emptyList(),
                 prevKey = null,
                 nextKey = null,
             )
         }
+
         val posts = posts(params.key, params.loadSize)
         Log.e("RedditPagingSource", "posts (${posts.size} ): $posts")
         val prevKey = posts.firstOrNull()?.before
@@ -35,5 +36,11 @@ class RedditPagingSource @Inject constructor(
 
     private suspend fun posts(params: String?, loadSize: Int) = redditDatabaseClient.getPosts(params, loadSize)
 
-    override fun getRefreshKey(state: PagingState<String, Post>) = state.anchorPosition?.let { state.closestItemToPosition(it)?.name }
+    override fun getRefreshKey(state: PagingState<String, Post>): String? {
+        val let = state.anchorPosition?.let { state.closestItemToPosition(it) }
+        val page = let?.page
+        Log.e("RedditPagingSource", "getRefreshKey page: $page")
+
+        return page
+    }
 }

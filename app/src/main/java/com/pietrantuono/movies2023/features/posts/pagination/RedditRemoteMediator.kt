@@ -27,9 +27,9 @@ class RedditRemoteMediator @Inject constructor(
         Log.e("RedditRemoteMediator", "loadType: $loadType")
 
         val key = when (loadType) {
-            REFRESH -> state.getNextItem()
-            PREPEND -> state.getNextItem() ?: return Success(endOfPaginationReached = true)
-            APPEND -> state.getPreviousItem() ?: return Success(endOfPaginationReached = true)
+            REFRESH -> null
+            APPEND -> state.getNextItem() ?: return Success(endOfPaginationReached = false)
+            PREPEND -> state.getPreviousItem() ?: return Success(endOfPaginationReached = false)
         }
         Log.e("RedditRemoteMediator", "key: $key")
         return try {
@@ -37,17 +37,17 @@ class RedditRemoteMediator @Inject constructor(
                 PREPEND -> apiClient.getSubReddit(subReddit = FUNNY, before = key, limit = state.config.pageSize)
                 else -> apiClient.getSubReddit(subReddit = FUNNY, after = key, limit = state.config.pageSize)
             }
-            Log.e("RedditRemoteMediator", "posts: $posts")
+            Log.e("RedditRemoteMediator", "posts (${posts.size} ): $posts")
             databaseClient.insertPosts(posts, key)
-            Success(endOfPaginationReached = posts.isEmpty())
+            Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
             Error(exception)
         }
     }
 
-    private fun PagingState<String, Post>.getNextItem() = lastItemOrNull()?.name
+    private fun PagingState<String, Post>.getNextItem() = lastItemOrNull()?.after
 
-    private fun PagingState<String, Post>.getPreviousItem() = firstItemOrNull()?.name
+    private fun PagingState<String, Post>.getPreviousItem() = firstItemOrNull()?.before
 
     private companion object {
         private const val FUNNY = "funny"

@@ -31,6 +31,7 @@ class PostWithImagesEntityToPostMapper @Inject constructor() : Mapper<PostWithIm
                     width = it.width,
                     height = it.height
                 )
-            }
+            },
+            page = input.post.page
         )
 }

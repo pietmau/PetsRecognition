@@ -17,27 +17,27 @@ class NetworkDataEntityMapper @Inject constructor(): Mapper<NetowrkRedditRespons
             Post(
                 kind = kind,
                 name = data!!.name,
-                title = data.title,
-                author = data.author,
-                created = data.created,
-                id = data.id,
-                numComments = data.numComments,
-                permalink = data.permalink,
-                score = data.score,
                 subreddit = data.subreddit,
-                subredditId = data.subredditId,
                 thumbnail = data.thumbnail,
+                title = data.title,
                 ups = data.ups,
-                url = data.url,
-                before = before,
-                after = after,
+                created = data.created,
                 images = data.preview?.images?.flatMap { it.resolutions }?.map {
                     Image(
                         url = it.url,
                         width = it.width,
                         height = it.height
                     )
-                } ?: emptyList()
+                } ?: emptyList(),
+                subredditId = data.subredditId,
+                id = data.id,
+                author = data.author,
+                numComments = data.numComments,
+                permalink = data.permalink,
+                url = data.url,
+                score = data.score,
+                before = before,
+                after = after
             )
         } ?: emptyList()
     }
