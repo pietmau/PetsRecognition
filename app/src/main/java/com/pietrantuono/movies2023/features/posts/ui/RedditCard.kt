@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +62,7 @@ fun RedditCard(
 
 @Composable
 private fun ThumbNailImage(post: Post = Post(title = "Title", createdUtc = 0, name = "", id = "")) {
-    var hideImage by remember { mutableStateOf(false) }
+    var hideImage by rememberSaveable { mutableStateOf(false) }
     if (!hideImage) {
         AsyncImage(
             modifier = Modifier
