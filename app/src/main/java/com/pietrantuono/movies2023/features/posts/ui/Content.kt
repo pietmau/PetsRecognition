@@ -11,12 +11,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pietrantuono.movies2023.features.posts.PostsAction
-import com.pietrantuono.movies2023.features.posts.PostsAction.PostClicked
-import com.pietrantuono.movies2023.features.posts.PostsViewState.Content
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent.PostClicked
+import com.pietrantuono.movies2023.features.posts.PostsUiState.Content
 
 @Composable
-internal fun Content(state: Content = Content(), actions: (PostsAction) -> Unit = {}) {
+internal fun Content(state: Content = Content(), actions: (PostsUiEvent) -> Unit = {}) {
     val listState = rememberLazyListState()
     val shouldPaginate by listState.shouldPaginate()
 
@@ -31,12 +31,12 @@ internal fun Content(state: Content = Content(), actions: (PostsAction) -> Unit 
     }
     Spacer(modifier = Modifier.padding(top = 4.dp)) // TODO Externzalizex
     LaunchedEffect(true) {
-        actions(PostsAction.GetInitialPosts)
+        actions(PostsUiEvent.GetInitialPosts)
     }
     LaunchedEffect(shouldPaginate) {
         if (shouldPaginate) {
             val indexOfLastItem = listState.layoutInfo.totalItemsCount - 1
-            actions(PostsAction.GetNextPosts(indexOfLastItem))
+            actions(PostsUiEvent.GetNextPosts(indexOfLastItem))
         }
     }
 }

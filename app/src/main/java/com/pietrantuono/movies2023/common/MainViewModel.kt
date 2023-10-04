@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-abstract class RedditViewModel<ViewState, UserAction>(
+abstract class RedditViewModel<UiState, UiEvent>(
     private val coroutineContext: CoroutineContext,
-) : ViewModel(), Consumer<UserAction> {
+) : ViewModel(), Consumer<UiEvent> {
 
-    abstract val _viewState: MutableStateFlow<ViewState>
-    val viewState: Flow<ViewState>
-        get() = _viewState
+    abstract val _uiState: MutableStateFlow<UiState>
+    val viewState: Flow<UiState>
+        get() = _uiState
 
     protected fun launch(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(coroutineContext) {

@@ -6,11 +6,11 @@ import com.pietrantuono.domain.GetPostsUseCase.Params.Next
 import com.pietrantuono.movies2023.common.RedditViewModel
 import com.pietrantuono.movies2023.features.Destination.Detail
 import com.pietrantuono.movies2023.features.Destination.None
-import com.pietrantuono.movies2023.features.posts.PostsAction.GetInitialPosts
-import com.pietrantuono.movies2023.features.posts.PostsAction.GetNextPosts
-import com.pietrantuono.movies2023.features.posts.PostsAction.NavigationPerformed
-import com.pietrantuono.movies2023.features.posts.PostsAction.PostClicked
-import com.pietrantuono.movies2023.features.posts.PostsViewState.Content
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent.GetInitialPosts
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent.GetNextPosts
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent.NavigationPerformed
+import com.pietrantuono.movies2023.features.posts.PostsUiEvent.PostClicked
+import com.pietrantuono.movies2023.features.posts.PostsUiState.Content
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -20,11 +20,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class PostsViewModel @Inject constructor(
     private val useCase: GetPostsUseCase,
     coroutineContext: CoroutineContext,
-) : RedditViewModel<PostsViewState, PostsAction>(coroutineContext) {
+) : RedditViewModel<PostsUiState, PostsUiEvent>(coroutineContext) {
 
-    override val _viewState: MutableStateFlow<PostsViewState> = MutableStateFlow(Content())
+    override val _uiState: MutableStateFlow<PostsUiState> = MutableStateFlow(Content())
 
-    override fun accept(action: PostsAction) {
+    override fun accept(action: PostsUiEvent) {
         when (action) {
             is GetInitialPosts -> getInitialPosts()
             is GetNextPosts -> getNextPosts(action.indexOfLastItem)
@@ -41,7 +41,7 @@ class PostsViewModel @Inject constructor(
     }
 
     private fun getNextPosts(indexOfLastItem: Int) {
-        val data = (_viewState.value as? Content)?.posts
+        val data = (_uiState.value as? Content)?.posts
         val nextPage = data?.getOrNull(indexOfLastItem) ?: return
         launch {
             val newPosts = useCase.execute(Next(nextPage.createdUtc, nextPage.name))
@@ -50,10 +50,10 @@ class PostsViewModel @Inject constructor(
     }
 
     private fun updateState(reducer: Content.() -> Content) {
-        val currentState = _viewState.value as? Content ?: return
+        val currentState = _uiState.value as? Content ?: return
         val newState = currentState.reducer()
         if (newState != currentState) {
-            _viewState.value = newState
+            _uiState.value = newState
         }
     }
 }
