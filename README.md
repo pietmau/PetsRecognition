@@ -11,3 +11,11 @@ OBSERVE THE database!!!!
 - `LazyColumn` needs the ID.
 - Load differently in case of `Prepend` or `Append` and `Refresh`.
 - I don't want to leak paging in the domain or data layer.
+
+
+
+# ASSUMPTIONS
+- 
+
+# TOOLS
+- Use **dependency-analysis-gradle-plugin**
