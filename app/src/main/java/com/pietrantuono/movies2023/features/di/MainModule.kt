@@ -54,8 +54,10 @@ interface MainModule {
 
     companion object {
 
+        private const val DATABASE_NAME = "database-reddit"
+
         @Provides
-        fun provideCoroutineContext():CoroutineContext = Dispatchers.IO
+        fun provideCoroutineContext(): CoroutineContext = Dispatchers.IO
 
         @Provides
         fun provideConnectivityManager(@ApplicationContext context: Context) =
@@ -75,8 +77,9 @@ interface MainModule {
         @Provides
         fun bindDatabaseClient(@ApplicationContext applicationContext: Context): DatabaseClient {
             val database = Room.databaseBuilder(
-                applicationContext,
-                RedditDatabase::class.java, "database-reddit"
+                context = applicationContext,
+                klass = RedditDatabase::class.java,
+                name = DATABASE_NAME
             ).build()
             return DatabaseClientImpl(
                 redditDatabase = database,

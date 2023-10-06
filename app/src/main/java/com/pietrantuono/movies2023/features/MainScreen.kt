@@ -12,6 +12,8 @@ import com.pietrantuono.movies2023.features.posts.PostsUiState
 import com.pietrantuono.movies2023.features.posts.PostsViewModel
 import com.pietrantuono.movies2023.features.posts.ui.PostsScreen
 
+private const val NO_NAME = "No name"
+
 @Composable
 internal fun MainScreen() {
     val navController = rememberNavController()
@@ -30,7 +32,7 @@ internal fun MainScreen() {
             arguments = detailNavArguments
         ) {
             val name = it.arguments?.getString(ID)
-            Text(text = name ?: "No name")
+            Text(text = name ?: NO_NAME)
         }
     }
 }

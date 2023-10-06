@@ -10,13 +10,18 @@ interface RedditApi {
 
     @GET("/r/{subReddit}/new/")
     suspend fun getSubReddit(
-        @Path("subReddit") subReddit: String,
-        @QueryMap queryMap: Map<String, String>
+        @Path(SUBREDDIT) subReddit: String,
+        @QueryMap queryMap: Map<String, String>,
     ): NetowrkRedditResponseEntity
 
     @GET("/r/{subReddit}/top/")
     fun getSubRedditTopCall(
-        @Path("subReddit") subReddit: String,
-        @QueryMap queryMap: Map<String, String>
+        @Path(SUBREDDIT) subReddit: String,
+        @QueryMap queryMap: Map<String, String>,
     ): Call<NetowrkRedditResponseEntity>
+
+
+    private companion object {
+        private const val SUBREDDIT = "subReddit"
+    }
 }

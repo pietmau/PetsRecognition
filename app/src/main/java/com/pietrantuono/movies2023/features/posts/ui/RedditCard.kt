@@ -15,44 +15,56 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.pietrantuono.domain.model.reddit.Post
+import com.pietrantuono.movies2023.R
+
+private const val TITLE = "Title"
+private const val EMPTY_STRING = ""
 
 @Composable
 fun RedditCard(
     modifier: Modifier = Modifier,
-    post: Post = Post(title = "Title", createdUtc = 0, name = "", id = ""),
+    post: Post = Post(title = TITLE, createdUtc = 0, name = EMPTY_STRING, id = EMPTY_STRING),
 ) {
+    val smallPadding = dimensionResource(R.dimen.small_padding)
     Card(
         modifier = modifier
-            .padding(top = 4.dp, start = 4.dp, end = 4.dp)
-            .defaultMinSize(minHeight = 56.dp)//TODO Externzalize
+            .padding(
+                top = smallPadding,
+                start = smallPadding,
+                end = smallPadding
+            )
+            .defaultMinSize(minHeight = dimensionResource(R.dimen.default_size))//TODO Externzalize
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
+                .padding(smallPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ThumbNailImage(post)
             Column(
                 modifier = Modifier
-                    .padding(start = 4.dp, end = 4.dp),
+                    .padding(
+                        start = smallPadding,
+                        end = smallPadding
+                    ),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = post.author ?: "", // TODO add better default
+                    text = post.author ?: EMPTY_STRING, // TODO add better default
                     style = MaterialTheme.typography.labelSmall
                 )
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = post.title ?: "", // TODO add better default
+                    modifier = Modifier.padding(top = smallPadding),
+                    text = post.title ?: EMPTY_STRING, // TODO add better default
                     style = MaterialTheme.typography.titleSmall
                 )
             }
@@ -61,20 +73,20 @@ fun RedditCard(
 }
 
 @Composable
-private fun ThumbNailImage(post: Post = Post(title = "Title", createdUtc = 0, name = "", id = "")) {
+private fun ThumbNailImage(post: Post = Post(title = "Title", createdUtc = 0, name = EMPTY_STRING, id = EMPTY_STRING)) {
     var hideImage by rememberSaveable { mutableStateOf(false) }
     if (!hideImage) {
         AsyncImage(
             modifier = Modifier
-                .width(56.dp)
-                .height(56.dp)
-                .padding(4.dp),
+                .width(dimensionResource(R.dimen.default_size))
+                .height(dimensionResource(R.dimen.default_size))
+                .padding(dimensionResource(R.dimen.small_padding)),
             model = post.thumbnail,
             contentDescription = post.title,
             onError = { hideImage = true }
         )
     } else {
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.small_padding)))
     }
 }
 

@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class RetrofitRedditApiClient @Inject constructor(
     bearerTokenAuthInterceptor: BearerTokenAuthInterceptor,
     private val mapper: NetworkDataEntityMapper,
@@ -41,13 +42,18 @@ class RetrofitRedditApiClient @Inject constructor(
         after: String?,
     ) = mutableMapOf<String, String>().apply {
         // Explanation https://www.reddit.com/r/redditdev/comments/d8zl00/comment/f1g505p/?utm_source=share&utm_medium=web2x&context=3
-        this["count"] = "10"
-        limit?.let { this["limit"] = it.toString() }
-        before?.let { this["before"] = it }
-        after?.let { this["after"] = it }
+        this[COUNT] = DEFAULT_COUNT
+        limit?.let { this[LIMIT] = it.toString() }
+        before?.let { this[BEFORE] = it }
+        after?.let { this[AFTER] = it }
     }
 
     private companion object {
         private const val BASE_URL = "https://oauth.reddit.com" // TODO move to gradle
+        private const val COUNT = "count"
+        private const val DEFAULT_COUNT = "10"
+        private const val LIMIT = "limit"
+        private const val BEFORE = "before"
+        private const val AFTER = "after"
     }
 }

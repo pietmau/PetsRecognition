@@ -7,9 +7,9 @@ import okhttp3.Request
 import okhttp3.Response
 
 class BearerTokenAuthInterceptor constructor(
-    private val host: String = "oauth.reddit.com",
+    private val host: String = HOST,
     private val tokenManager: TokenManager,
-    private val accessTokenApiClient: RetrofitAccessTokenApiClient
+    private val accessTokenApiClient: RetrofitAccessTokenApiClient,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -47,5 +47,6 @@ class BearerTokenAuthInterceptor constructor(
         private const val AUTHORIZATION = "Authorization"
         private const val BEARER = "Bearer"
         private const val UNAUTHORIZED = 401
+        private const val HOST = "oauth.reddit.com"
     }
 }
