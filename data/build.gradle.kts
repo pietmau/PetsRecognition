@@ -41,20 +41,17 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-
-    // Paging 3
-    implementation("androidx.paging:paging-runtime:3.2.1")
-    implementation("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation(libs.javax.inject)
+    implementation(libs.core.ktx)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation(libs.retrofit2)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    implementation(project(mapOf("path" to ":domain")))
+    implementation(libs.hilt.android)
+    implementation(project(mapOf("path" to ":domain"))) // TODO: 2021-10-20
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
     // Room
